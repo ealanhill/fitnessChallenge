@@ -7,5 +7,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="Font" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+
 
 </resources>
