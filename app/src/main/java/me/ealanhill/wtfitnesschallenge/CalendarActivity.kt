@@ -16,24 +16,11 @@ class CalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         linearLayoutManager = LinearLayoutManager(this)
 
-        val currentCalendar: Calendar = Calendar.getInstance()
-        currentCalendar.set(currentCalendar[Calendar.YEAR], currentCalendar[Calendar.MONTH], 1)
-        val daysInMonth: Int = currentCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val dates: MutableList<DateItem> = ArrayList(daysInMonth)
-        val month: String = currentCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US)
-        for (day: Int in 1..daysInMonth) {
-            dates.add(DateItem(
-                       month,
-                       day,
-                       0
-                   ))
-        }
-
         binding = DataBindingUtil.setContentView<ActivityCalendarBinding>(this, R.layout.activity_calendar)
                 .apply {
                     calendarRecyclerView.setHasFixedSize(true)
                     calendarRecyclerView.layoutManager = linearLayoutManager
-                    calendarRecyclerView.adapter = CalendarAdapter(dates)
+                    calendarRecyclerView.adapter = CalendarAdapter(getDaysInMonth(Calendar.getInstance()))
                 }
     }
 }
