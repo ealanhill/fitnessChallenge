@@ -9,14 +9,16 @@ import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
 
 class CalendarActivity : AppCompatActivity() {
 
-    private var binding: ActivityCalendarBinding? = null
-    private var linearLayoutManager: LinearLayoutManager? = null
+    private lateinit var binding: ActivityCalendarBinding
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView<ActivityCalendarBinding>(this, R.layout.activity_calendar)
-        binding!!.calendarRecyclerView.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(this)
-        binding!!.calendarRecyclerView.layoutManager = linearLayoutManager
+        binding = DataBindingUtil.setContentView<ActivityCalendarBinding>(this, R.layout.activity_calendar)
+                .apply {
+                    calendarRecyclerView.setHasFixedSize(true)
+                    calendarRecyclerView.layoutManager = linearLayoutManager
+                }
     }
 }
