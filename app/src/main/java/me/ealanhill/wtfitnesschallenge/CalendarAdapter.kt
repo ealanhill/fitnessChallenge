@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 
-class CalendarAdapter(val dates: List<DateItem>) : Adapter<CalendarItemViewHolder>() {
+class CalendarAdapter(var dates: List<DateItem>) : Adapter<CalendarItemViewHolder>() {
 
     override fun onBindViewHolder(holder: CalendarItemViewHolder?, position: Int) {
         holder?.bind(dates[position])
@@ -19,4 +19,7 @@ class CalendarAdapter(val dates: List<DateItem>) : Adapter<CalendarItemViewHolde
 
     override fun getItemCount() = dates.size
 
+    fun setState(newDates: List<DateItem>) {
+        dates = newDates
+    }
 }
