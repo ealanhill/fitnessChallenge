@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">WT Fitness Challenge</string>
     <string name="date_format">%1$s %2$d</string>
+
+    <string name="points_for_exercise">Points from Exercise</string>
+    <string name="points_for_snacks">Points Removed for Snacks</string>
+    <string name="points_for_goal">Did you meet your fitness goal for today?</string>
+    <string name="points_for_plank">Did you participate in the plank challenge today?</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
