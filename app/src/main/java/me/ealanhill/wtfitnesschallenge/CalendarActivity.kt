@@ -31,7 +31,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner {
                 .apply {
                     calendarRecyclerView.setHasFixedSize(true)
                     calendarRecyclerView.layoutManager = linearLayoutManager
-                    calendarRecyclerView.adapter = CalendarAdapter(Collections.emptyList())
+                    calendarRecyclerView.adapter = CalendarAdapter(Collections.emptyList(), supportFragmentManager)
                 }
 
         val calendarViewModel: CalendarViewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
