@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -41,6 +42,34 @@ class PointsDialogFragment: DialogFragment() {
         }
     }
 
+//    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        super.onCreateView(inflater, container, savedInstanceState)
+//        val view: View = inflater!!.inflate(R.layout.dialog_points_entry, container, false)
+//        val binding = DataBindingUtil.inflate<DialogPointsEntryBinding>(inflater, R.layout.dialog_points_entry, container, false)
+//                .apply {
+//                    pointsRecyclerVew.setHasFixedSize(true)
+//                    pointsRecyclerVew.layoutManager = LinearLayoutManager(activity)
+//                    pointsRecyclerVew.adapter = PointsEntryAdapter(items)
+//                }
+//        val binding: DialogPointsEntryBinding = DataBindingUtil.bind<DialogPointsEntryBinding>(view)
+//                .apply {
+//                    pointsRecyclerVew.setHasFixedSize(true)
+//                    pointsRecyclerVew.layoutManager = LinearLayoutManager(activity)
+//                    pointsRecyclerVew.adapter = PointsEntryAdapter(items)
+//                }
+//
+//        for (item: DateItem in store.state.dateItems) {
+//            if (item.date == dayId) {
+//                dateItem = item
+//                break
+//            }
+//        }
+//
+//        dialog.setTitle(getString(R.string.date_format, dateItem.month, dateItem.date))
+//
+//        return view
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         store = ViewModelProviders.of(activity as AppCompatActivity)
@@ -60,9 +89,8 @@ class PointsDialogFragment: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view: View = LayoutInflater.from(activity)
-                .inflate(R.layout.dialog_points_entry, null)
-        val binding: DialogPointsEntryBinding = DataBindingUtil.setContentView<DialogPointsEntryBinding>(activity, R.layout.dialog_points_entry)
+        val view: View = activity.layoutInflater.inflate(R.layout.dialog_points_entry, null)
+        DataBindingUtil.bind<DialogPointsEntryBinding>(view)
                 .apply {
                     pointsRecyclerVew.setHasFixedSize(true)
                     pointsRecyclerVew.layoutManager = LinearLayoutManager(activity)

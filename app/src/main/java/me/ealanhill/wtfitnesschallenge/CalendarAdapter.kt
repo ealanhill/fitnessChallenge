@@ -1,20 +1,19 @@
 package me.ealanhill.wtfitnesschallenge
 
-import android.support.v4.app.FragmentManager
 import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
 
-class CalendarAdapter(var dates: List<DateItem>, val fragmentManager: FragmentManager) : Adapter<CalendarItemViewHolder>() {
+class CalendarAdapter(var dates: List<DateItem>, val onClickListener: CalendarOnClickListener) : Adapter<CalendarItemViewHolder>() {
+
+    interface CalendarOnClickListener {
+        fun onClick(dateItem: DateItem)
+    }
 
     override fun onBindViewHolder(holder: CalendarItemViewHolder, position: Int) {
         holder.bind(dates[position])
-        holder.binding.dateItemLayout.setOnClickListener { v ->
-            PointsDialogFragment.newInstance(dates[position].date)
-                    .show(fragmentManager, "dialog")
-        }
+        holder.binding.dateItemLayout.setOnClickListener { _ -> onClickListener.onClick(dates[position]) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarItemViewHolder {

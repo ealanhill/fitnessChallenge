@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.R
 import java.util.*
 
@@ -38,4 +39,7 @@ class PointsEntryAdapter(var items: List<EntryFormItem> = Collections.emptyList(
 
     override fun getItemCount(): Int = items.size
 
+    fun setState(newItems: List<EntryFormItem>) {
+        items = newItems
+    }
 }

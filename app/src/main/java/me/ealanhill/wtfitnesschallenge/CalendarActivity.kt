@@ -9,11 +9,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
+import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
 import java.util.*
 
-class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner {
+class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAdapter.CalendarOnClickListener {
 
     private lateinit var binding: ActivityCalendarBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -31,7 +32,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner {
                 .apply {
                     calendarRecyclerView.setHasFixedSize(true)
                     calendarRecyclerView.layoutManager = linearLayoutManager
-                    calendarRecyclerView.adapter = CalendarAdapter(Collections.emptyList(), supportFragmentManager)
+                    calendarRecyclerView.adapter = CalendarAdapter(Collections.emptyList(), this@CalendarActivity)
                 }
 
         val calendarViewModel: CalendarViewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
@@ -48,5 +49,10 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner {
                 (binding.calendarRecyclerView.adapter as CalendarAdapter).notifyDataSetChanged()
             }
         })
+    }
+
+    override fun onClick(dateItem: DateItem) {
+        PointsDialogFragment.newInstance(dateItem.date)
+                .show(supportFragmentManager, "dialog")
     }
 }
