@@ -2,21 +2,25 @@
   {
     "name": "exercise",
     "label": "Exercise Points",
-    "type": "pointEntry"
+    "type": "pointEntry",
+    "value": 0
   },
   {
     "name": "snacks",
     "label": "Snack Points",
-    "type": "pointEntry"
+    "type": "pointEntry",
+    "value": 0
   },
   {
     "name": "goal",
     "label": "Have you completed your fitness goal for today?",
-    "type": "yesNo"
+    "type": "yesNo",
+    "value": 0
   },
   {
     "name": "plank",
     "label": "Did you complete the plank challenge for today?",
-    "type": "yesNo"
+    "type": "yesNo",
+    "value": 0
   }
 ]

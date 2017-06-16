@@ -12,7 +12,6 @@ import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
 import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
-import java.util.*
 
 class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAdapter.CalendarOnClickListener {
 

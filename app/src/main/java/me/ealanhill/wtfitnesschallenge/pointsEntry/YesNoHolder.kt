@@ -5,9 +5,8 @@ import android.widget.LinearLayout
 import me.ealanhill.wtfitnesschallenge.FitnessChallengeApplication
 import me.ealanhill.wtfitnesschallenge.R
 import me.ealanhill.wtfitnesschallenge.databinding.ItemYesNoBinding
-import me.ealanhill.wtfitnesschallenge.store.PointStore
 
-class YesNoHolder(itemView: LinearLayout, pointStore: PointStore): PointsViewHolder(itemView, pointStore) {
+class YesNoHolder(itemView: LinearLayout): PointsViewHolder(itemView) {
 
     val binding: ItemYesNoBinding = DataBindingUtil.bind(itemView)
 

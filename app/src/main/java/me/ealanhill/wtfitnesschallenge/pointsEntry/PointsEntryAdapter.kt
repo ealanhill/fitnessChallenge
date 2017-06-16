@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.store.PointStore
 import java.util.*
 
-class PointsEntryAdapter(var items: List<EntryFormItem> = Collections.emptyList(), val pointStore: PointStore):
+class PointsEntryAdapter(var items: List<EntryFormItem> = Collections.emptyList()):
         RecyclerView.Adapter<PointsViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -30,11 +29,9 @@ class PointsEntryAdapter(var items: List<EntryFormItem> = Collections.emptyList(
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         when(viewType) {
             R.layout.item_point_entry -> return PointEntryHolder(
-                    inflater.inflate(R.layout.item_point_entry, parent, false) as TextInputLayout,
-                    pointStore)
+                    inflater.inflate(R.layout.item_point_entry, parent, false) as TextInputLayout)
             R.layout.item_yes_no -> return YesNoHolder(
-                    inflater.inflate(R.layout.item_yes_no, parent, false) as LinearLayout,
-                    pointStore)
+                    inflater.inflate(R.layout.item_yes_no, parent, false) as LinearLayout)
         }
         throw IllegalArgumentException("Unknown type " + viewType)
     }

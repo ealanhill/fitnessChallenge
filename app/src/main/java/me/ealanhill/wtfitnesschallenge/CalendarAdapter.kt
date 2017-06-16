@@ -11,9 +11,9 @@ class CalendarAdapter(val onClickListener: CalendarOnClickListener) : Adapter<Ca
 
     var dates: List<DateItem> by Delegates.observable(emptyList()) {
         _, oldList, newList ->
-        autoNotify(oldList, newList, DateDiffUtil(oldList, newList)) {
-            o, n -> o.date == n.date
-        }
+            autoNotify(oldList, newList, DateDiffUtil(oldList, newList)) {
+                o, n -> o.date == n.date
+            }
     }
 
     interface CalendarOnClickListener {

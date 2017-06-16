@@ -19,16 +19,13 @@ import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.R
 import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
-import me.ealanhill.wtfitnesschallenge.state.PointsState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
-import me.ealanhill.wtfitnesschallenge.store.PointStore
 import okio.Okio
 import java.io.InputStream
 
 class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
     private lateinit var mainStore: MainStore
-    private lateinit var pointStore: PointStore
     private lateinit var dateItem: DateItem
     private lateinit var items: List<EntryFormItem>
 
@@ -57,9 +54,6 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                 .store
         dayId = arguments.getInt(ID)
 
-        val pointViewModel = ViewModelProviders.of(this).get(PointsViewModel::class.java)
-        pointStore = pointViewModel.store
-
         val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
@@ -77,7 +71,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                 .apply {
                     pointsRecyclerVew.setHasFixedSize(true)
                     pointsRecyclerVew.layoutManager = LinearLayoutManager(activity)
-                    pointsRecyclerVew.adapter = PointsEntryAdapter(items, pointStore)
+                    pointsRecyclerVew.adapter = PointsEntryAdapter(items)
                 }
 
         for (item: DateItem in mainStore.state.dateItems) {
@@ -91,8 +85,11 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                 .setTitle(getString(R.string.date_format, dateItem.month, dateItem.date))
                 .setView(view)
                 .setPositiveButton(android.R.string.ok, { dialog, which ->
-                    val pointsState: PointsState = pointStore.state
-                    mainStore.dispatch(UpdateCalendarPointsAction.create(dateItem, pointsState.pointsMap))
+                    val points: MutableMap<String, Int> = mutableMapOf()
+                    items.map { entryFormItem ->
+                        points.put(entryFormItem.name, entryFormItem.value)
+                    }
+                    mainStore.dispatch(UpdateCalendarPointsAction.create(dateItem, points))
                 })
                 .create()
     }
