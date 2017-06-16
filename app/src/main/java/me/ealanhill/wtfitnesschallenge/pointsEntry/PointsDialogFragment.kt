@@ -2,33 +2,41 @@ package me.ealanhill.wtfitnesschallenge.pointsEntry
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import me.ealanhill.wtfitnesschallenge.CalendarViewModel
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.R
+import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
+import me.ealanhill.wtfitnesschallenge.state.PointsState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
+import me.ealanhill.wtfitnesschallenge.store.PointStore
 import okio.Okio
 import java.io.InputStream
 
-class PointsDialogFragment: DialogFragment() {
+class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
-    private lateinit var store: MainStore
+    private lateinit var mainStore: MainStore
+    private lateinit var pointStore: PointStore
     private lateinit var dateItem: DateItem
     private lateinit var items: List<EntryFormItem>
 
     private var dayId: Int = -1
+
+    private val registry = LifecycleRegistry(this)
+
+    override fun getLifecycle(): LifecycleRegistry = registry
 
     companion object {
         private val ID = "id"
@@ -42,40 +50,15 @@ class PointsDialogFragment: DialogFragment() {
         }
     }
 
-//    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        super.onCreateView(inflater, container, savedInstanceState)
-//        val view: View = inflater!!.inflate(R.layout.dialog_points_entry, container, false)
-//        val binding = DataBindingUtil.inflate<DialogPointsEntryBinding>(inflater, R.layout.dialog_points_entry, container, false)
-//                .apply {
-//                    pointsRecyclerVew.setHasFixedSize(true)
-//                    pointsRecyclerVew.layoutManager = LinearLayoutManager(activity)
-//                    pointsRecyclerVew.adapter = PointsEntryAdapter(items)
-//                }
-//        val binding: DialogPointsEntryBinding = DataBindingUtil.bind<DialogPointsEntryBinding>(view)
-//                .apply {
-//                    pointsRecyclerVew.setHasFixedSize(true)
-//                    pointsRecyclerVew.layoutManager = LinearLayoutManager(activity)
-//                    pointsRecyclerVew.adapter = PointsEntryAdapter(items)
-//                }
-//
-//        for (item: DateItem in store.state.dateItems) {
-//            if (item.date == dayId) {
-//                dateItem = item
-//                break
-//            }
-//        }
-//
-//        dialog.setTitle(getString(R.string.date_format, dateItem.month, dateItem.date))
-//
-//        return view
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        store = ViewModelProviders.of(activity as AppCompatActivity)
+        mainStore = ViewModelProviders.of(activity as AppCompatActivity)
                 .get(CalendarViewModel::class.java)
                 .store
         dayId = arguments.getInt(ID)
+
+        val pointViewModel = ViewModelProviders.of(this).get(PointsViewModel::class.java)
+        pointStore = pointViewModel.store
 
         val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
@@ -90,14 +73,14 @@ class PointsDialogFragment: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view: View = activity.layoutInflater.inflate(R.layout.dialog_points_entry, null)
-        DataBindingUtil.bind<DialogPointsEntryBinding>(view)
+        val binding = DataBindingUtil.bind<DialogPointsEntryBinding>(view)
                 .apply {
                     pointsRecyclerVew.setHasFixedSize(true)
                     pointsRecyclerVew.layoutManager = LinearLayoutManager(activity)
-                    pointsRecyclerVew.adapter = PointsEntryAdapter(items)
+                    pointsRecyclerVew.adapter = PointsEntryAdapter(items, pointStore)
                 }
 
-        for (item: DateItem in store.state.dateItems) {
+        for (item: DateItem in mainStore.state.dateItems) {
             if (item.date == dayId) {
                 dateItem = item
                 break
@@ -108,7 +91,8 @@ class PointsDialogFragment: DialogFragment() {
                 .setTitle(getString(R.string.date_format, dateItem.month, dateItem.date))
                 .setView(view)
                 .setPositiveButton(android.R.string.ok, { dialog, which ->
-                    // TODO
+                    val pointsState: PointsState = pointStore.state
+                    mainStore.dispatch(UpdateCalendarPointsAction.create(dateItem, pointsState.pointsMap))
                 })
                 .create()
     }

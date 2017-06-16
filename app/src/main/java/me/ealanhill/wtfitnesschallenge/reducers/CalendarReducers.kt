@@ -1,21 +1,21 @@
 package me.ealanhill.wtfitnesschallenge.reducers
 
-import java.util.ArrayList
-import java.util.Calendar
-import java.util.Locale
-
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
+import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
+import java.util.*
+import kotlin.collections.ArrayList
 
 object CalendarReducers {
 
     fun reducer(): Reducer<Action, CalendarState> {
         return Reducers.matchClass<Action, CalendarState>()
                 .`when`(InitializeCalendarAction::class.java, initializeCalendar())
+                .`when`(UpdateCalendarPointsAction::class.java, updateCalendarPoints())
     }
 
     fun initializeCalendar(): Reducer<InitializeCalendarAction, CalendarState> {
@@ -26,9 +26,28 @@ object CalendarReducers {
             val dates: MutableList<DateItem> = ArrayList<DateItem>()
             val month:String = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US)
             (1..daysInMonth).forEach {
-                day -> dates.add(DateItem(month, day, 0))
+                day -> dates.add(DateItem(month, day, 0, Collections.emptyMap()))
             }
             state.copy(dates, calendar)
+        }
+    }
+
+    fun updateCalendarPoints(): Reducer<UpdateCalendarPointsAction, CalendarState> {
+        return Reducer { action, state ->
+            var pointsTotal: Int = 0
+            action.points().forEach { _, value ->
+                pointsTotal += value
+            }
+
+            state.dateItems.forEach { dateItem: DateItem ->
+                if (dateItem.date == action.dateItem().date) {
+                    dateItem.totalPoints = pointsTotal
+                    dateItem.pointsMap = action.points()
+                    return@forEach
+                }
+            }
+
+            state
         }
     }
 }

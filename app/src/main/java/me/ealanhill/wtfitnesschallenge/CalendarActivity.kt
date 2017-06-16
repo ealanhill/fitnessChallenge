@@ -32,7 +32,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
                 .apply {
                     calendarRecyclerView.setHasFixedSize(true)
                     calendarRecyclerView.layoutManager = linearLayoutManager
-                    calendarRecyclerView.adapter = CalendarAdapter(Collections.emptyList(), this@CalendarActivity)
+                    calendarRecyclerView.adapter = CalendarAdapter(this@CalendarActivity)
                 }
 
         val calendarViewModel: CalendarViewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
@@ -46,7 +46,6 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
             data ->
             data?.let {
                 (binding.calendarRecyclerView.adapter as CalendarAdapter).setState(data.dateItems)
-                (binding.calendarRecyclerView.adapter as CalendarAdapter).notifyDataSetChanged()
             }
         })
     }

@@ -10,6 +10,6 @@ class CalendarItemViewHolder(itemView: LinearLayout) : RecyclerView.ViewHolder(i
 
     fun bind(dateItem: DateItem) {
         binding.date.text = itemView.context.getString(R.string.date_format, dateItem.month, dateItem.date)
-        binding.datePoints.text = dateItem.points.toString()
+        binding.datePoints.text = dateItem.totalPoints.toString()
     }
 }

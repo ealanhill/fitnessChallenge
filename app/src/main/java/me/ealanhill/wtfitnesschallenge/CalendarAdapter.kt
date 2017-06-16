@@ -4,8 +4,17 @@ import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import me.ealanhill.wtfitnesschallenge.util.DateDiffUtil
+import kotlin.properties.Delegates
 
-class CalendarAdapter(var dates: List<DateItem>, val onClickListener: CalendarOnClickListener) : Adapter<CalendarItemViewHolder>() {
+class CalendarAdapter(val onClickListener: CalendarOnClickListener) : Adapter<CalendarItemViewHolder>(), AutoUpdatableAdapter {
+
+    var dates: List<DateItem> by Delegates.observable(emptyList()) {
+        _, oldList, newList ->
+        autoNotify(oldList, newList, DateDiffUtil(oldList, newList)) {
+            o, n -> o.date == n.date
+        }
+    }
 
     interface CalendarOnClickListener {
         fun onClick(dateItem: DateItem)
