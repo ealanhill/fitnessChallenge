@@ -2,6 +2,7 @@ package me.ealanhill.wtfitnesschallenge
 
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -41,7 +42,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
             store.dispatch(InitializeCalendarAction)
         }
 
-        calendarViewModel.state.observe(this, android.arch.lifecycle.Observer<CalendarState> {
+        calendarViewModel.state.observe(this, Observer<CalendarState> {
             data ->
             data?.let {
                 (binding.calendarRecyclerView.adapter as CalendarAdapter).setState(data.dateItems)

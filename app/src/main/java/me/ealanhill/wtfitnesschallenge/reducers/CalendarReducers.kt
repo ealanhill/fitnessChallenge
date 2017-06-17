@@ -39,7 +39,10 @@ object CalendarReducers {
                 pointsTotal += value
             }
 
-            state.dateItems.forEach { dateItem: DateItem ->
+            val dateItems = ArrayList<DateItem>()
+            copy(state.dateItems, dateItems)
+
+            dateItems.forEach { dateItem: DateItem ->
                 if (dateItem.date == action.dateItem().date) {
                     dateItem.totalPoints = pointsTotal
                     dateItem.pointsMap = action.points()
@@ -47,7 +50,13 @@ object CalendarReducers {
                 }
             }
 
-            state
+            state.copy(dateItems, state.calendar)
+        }
+    }
+
+    private fun copy(oldList: List<DateItem>, newList: MutableList<DateItem>) {
+        oldList.forEach { dateItem: DateItem ->
+            newList.add(DateItem(dateItem.month, dateItem.date, dateItem.totalPoints, dateItem.pointsMap))
         }
     }
 }
