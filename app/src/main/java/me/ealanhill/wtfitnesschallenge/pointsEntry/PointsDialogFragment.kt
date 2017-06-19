@@ -7,6 +7,7 @@ import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
 import me.ealanhill.wtfitnesschallenge.store.MainStore
 import okio.Okio
 import java.io.InputStream
+import java.util.ArrayList
 
 class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
@@ -37,10 +39,12 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
     companion object {
         private val ID = "id"
+        private val ITEMS = "items"
 
-        fun newInstance(id: Int): PointsDialogFragment {
+        fun newInstance(id: Int, items: List<EntryFormItem>): PointsDialogFragment {
             val args: Bundle = Bundle()
             args.putInt(ID, id)
+            args.putParcelableArrayList(ITEMS, items.toMutableList() as ArrayList<out Parcelable>)
             val fragment: PointsDialogFragment = PointsDialogFragment()
             fragment.arguments = args
             return fragment
@@ -53,16 +57,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                 .get(CalendarViewModel::class.java)
                 .store
         dayId = arguments.getInt(ID)
-
-        val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-        val type = Types.newParameterizedType(List::class.java, EntryFormItem::class.java)
-        val entryFormItemAdapter = moshi.adapter<List<EntryFormItem>>(type)
-        activity.assets.open("test.json").use {
-            inputStream: InputStream? ->
-                items = entryFormItemAdapter.fromJson(Okio.buffer(Okio.source(inputStream)))!!
-        }
+        items = arguments.getParcelableArrayList(ITEMS)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
