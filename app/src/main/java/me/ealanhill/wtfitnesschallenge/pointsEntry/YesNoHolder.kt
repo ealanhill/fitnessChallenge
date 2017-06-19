@@ -14,6 +14,13 @@ class YesNoHolder(itemView: LinearLayout): PointsViewHolder(itemView) {
         binding.yesNoQuestion.text = item.label
         binding.yesAnswer.text = FitnessChallengeApplication.context.getString(R.string.yes)
         binding.noAnswer.text = FitnessChallengeApplication.context.getText(R.string.no)
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId) {
+                R.id.yes_answer -> item.value = 1
+                R.id.no_answer -> item.value = 0
+                else -> throw IllegalArgumentException("Unknown id")
+            }
+        }
     }
 
 }

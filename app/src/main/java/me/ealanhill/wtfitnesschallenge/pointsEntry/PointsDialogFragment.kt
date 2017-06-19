@@ -87,7 +87,8 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                 .setPositiveButton(android.R.string.ok, { dialog, which ->
                     val points: MutableMap<String, Int> = mutableMapOf()
                     items.map { entryFormItem ->
-                        points.put(entryFormItem.name, entryFormItem.value)
+                        val value = if (entryFormItem.operation == "subtract") entryFormItem.value * -1 else entryFormItem.value
+                        points.put(entryFormItem.name, value)
                     }
                     mainStore.dispatch(UpdateCalendarPointsAction.create(dateItem, points))
                 })

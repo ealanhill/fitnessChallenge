@@ -3,6 +3,7 @@ package me.ealanhill.wtfitnesschallenge.pointsEntry
 import android.databinding.DataBindingUtil
 import android.text.Editable
 import android.text.InputType
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.widget.LinearLayout
 import me.ealanhill.wtfitnesschallenge.databinding.ItemPointEntryBinding
@@ -15,7 +16,9 @@ class PointEntryHolder(itemView: LinearLayout): PointsViewHolder(itemView) {
         binding.inputItem.inputType = InputType.TYPE_CLASS_NUMBER
         binding.inputItem.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(s: Editable) {
-                item.value = s.toString().toInt()
+                if (!TextUtils.isEmpty(s.toString())) {
+                    item.value = s.toString().toInt()
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
