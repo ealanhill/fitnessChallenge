@@ -30,20 +30,23 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    compile 'android.arch.lifecycle:runtime:1.0.0-alpha1'
-    compile 'android.arch.lifecycle:extensions:1.0.0-alpha1'
+    compile 'com.android.support:design:25.3.1'
+
+    // Redux
     compile 'me.tatarka.redux:redux-core:1.0-SNAPSHOT'
     compile 'me.tatarka.redux:redux-android:1.0-SNAPSHOT'
     compile 'me.tatarka.redux:redux-android-lifecycle:1.0-SNAPSHOT'
     compile 'me.tatarka.redux:redux-thunk:1.0-SNAPSHOT'
     compile 'me.tatarka.redux:redux-replay:1.0-SNAPSHOT'
+
+    // Arch Lifecycle
+    compile 'android.arch.lifecycle:runtime:1.0.0-alpha1'
+    compile 'android.arch.lifecycle:extensions:1.0.0-alpha1'
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha1"
 
-    // JSON reader, temporary
-    compile 'com.squareup.moshi:moshi-kotlin:1.5.0'
+    // Firebase
+    compile 'com.google.firebase:firebase-database:11.0.1'
 
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -59,3 +62,5 @@ repositories {
         url "https://maven.google.com"
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "382937276315",
+    "firebase_url": "https://wt-fitness-challenge.firebaseio.com",
+    "project_id": "wt-fitness-challenge",
+    "storage_bucket": "wt-fitness-challenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382937276315:android:b7c5104964a03a67",
+        "android_client_info": {
+          "package_name": "me.ealanhill.wtfitnesschallenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382937276315-vbmlut1fmtv9mbstq4k36rhmnldijt70.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.ealanhill.wtfitnesschallenge",
+            "certificate_hash": "78d3386879ae2986acd1713e7e54b3e81e5ee201"
+          }
+        },
+        {
+          "client_id": "382937276315-00tdvk139d3fiajcvtm2hqkqhkjk31tu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzlCUojQSz04C_KltArW8KJUv4LKAOVr0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382937276315-00tdvk139d3fiajcvtm2hqkqhkjk31tu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

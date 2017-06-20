@@ -8,6 +8,8 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+import com.google.firebase.database.*
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -25,9 +27,11 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     private lateinit var binding: ActivityCalendarBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var store: MainStore
-    private lateinit var items: List<EntryFormItem>
+    private lateinit var database: DatabaseReference
 
     private val registry = LifecycleRegistry(this)
+    private val items: MutableList<EntryFormItem> = ArrayList<EntryFormItem>()
+    private val tag: String = "CalendarActivity"
 
     override fun getLifecycle(): LifecycleRegistry = registry
 
@@ -56,19 +60,24 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
             }
         })
 
-        val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-        val type = Types.newParameterizedType(List::class.java, EntryFormItem::class.java)
-        val entryFormItemAdapter = moshi.adapter<List<EntryFormItem>>(type)
-        assets.open("test.json").use {
-            inputStream: InputStream? ->
-            items = entryFormItemAdapter.fromJson(Okio.buffer(Okio.source(inputStream)))!!
-        }
+        database = FirebaseDatabase.getInstance().getReference("pointEntryForm")
+        database.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(databaseError: DatabaseError?) {
+                if (databaseError != null) {
+                    Log.e(tag, databaseError.toString())
+                }
+            }
+
+            override fun onDataChange(databaseSnapshot: DataSnapshot?) {
+                databaseSnapshot?.children?.forEach { child: DataSnapshot? ->
+                    items.add(child?.getValue(EntryFormItem::class.java)!!)
+                }
+            }
+
+        })
     }
 
     override fun onClick(dateItem: DateItem) {
-
         PointsDialogFragment.newInstance(dateItem.date, items)
                 .show(supportFragmentManager, "dialog")
     }
