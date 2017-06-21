@@ -2,14 +2,13 @@ package me.ealanhill.wtfitnesschallenge.pointsEntry
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.squareup.moshi.Json
 
 data class EntryFormItem(
-        @Json(name = "name") val name: String = "",
-        @Json(name = "label") val label: String = "",
-        @Json(name = "type") val type: String = "",
-        @Json(name = "operation") val operation: String = "",
-        @Json(name = "value") var value: Int = 0): Parcelable {
+        val name: String = "",
+        val label: String = "",
+        val type: String = "",
+        val operation: String = "",
+        var value: Int = 0): Parcelable {
 
     companion object {
         @JvmField

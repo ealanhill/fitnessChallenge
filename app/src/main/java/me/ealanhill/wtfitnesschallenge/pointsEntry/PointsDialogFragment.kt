@@ -12,18 +12,14 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.squareup.moshi.KotlinJsonAdapterFactory
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import me.ealanhill.wtfitnesschallenge.CalendarViewModel
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.R
 import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
+import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
 import me.ealanhill.wtfitnesschallenge.store.MainStore
-import okio.Okio
-import java.io.InputStream
-import java.util.ArrayList
+import java.util.*
 
 class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
@@ -82,10 +78,10 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                 .setPositiveButton(android.R.string.ok, { dialog, which ->
                     val points: MutableMap<String, Int> = mutableMapOf()
                     items.map { entryFormItem ->
-                        val value = if (entryFormItem.operation == "subtract") entryFormItem.value * -1 else entryFormItem.value
-                        points.put(entryFormItem.name, value)
+                        points.put(entryFormItem.name, entryFormItem.value)
                     }
                     mainStore.dispatch(UpdateCalendarPointsAction.create(dateItem, points))
+                    mainStore.dispatch(UploadPointsAction(items, dateItem.month, dateItem.date))
                 })
                 .create()
     }

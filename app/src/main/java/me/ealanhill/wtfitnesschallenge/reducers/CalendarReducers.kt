@@ -1,9 +1,12 @@
 package me.ealanhill.wtfitnesschallenge.reducers
 
+import com.google.firebase.database.FirebaseDatabase
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
+import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
+import me.ealanhill.wtfitnesschallenge.pointsEntry.EntryFormItem
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
@@ -16,6 +19,7 @@ object CalendarReducers {
         return Reducers.matchClass<Action, CalendarState>()
                 .`when`(InitializeCalendarAction::class.java, initializeCalendar())
                 .`when`(UpdateCalendarPointsAction::class.java, updateCalendarPoints())
+                .`when`(UploadPointsAction::class.java, updateFirebaseDatabase())
     }
 
     fun initializeCalendar(): Reducer<InitializeCalendarAction, CalendarState> {
@@ -51,6 +55,20 @@ object CalendarReducers {
             }
 
             state.copy(dateItems, state.calendar)
+        }
+    }
+
+    fun updateFirebaseDatabase(): Reducer<UploadPointsAction, CalendarState> {
+        return Reducer { action, state ->
+            val database = FirebaseDatabase.getInstance().getReference(action.month).child(Integer.toString(action.day))
+            var total = 0
+            action.items.forEach { entryFormItem: EntryFormItem ->
+                database.child("user 1").child(entryFormItem.name).setValue(entryFormItem.value)
+                total += entryFormItem.value
+            }
+            database.child("user 1").child("total").setValue(total)
+
+            state
         }
     }
 

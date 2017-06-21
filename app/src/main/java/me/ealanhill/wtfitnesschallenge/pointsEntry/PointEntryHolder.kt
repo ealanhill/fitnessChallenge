@@ -14,11 +14,12 @@ class PointEntryHolder(itemView: LinearLayout): PointsViewHolder(itemView) {
     override fun bind(item: EntryFormItem) {
         binding.inputItem.hint = item.label
         binding.inputItem.inputType = InputType.TYPE_CLASS_NUMBER
-        binding.inputItem.setText(item.value.toString())
+        binding.inputItem.setText(Math.abs(item.value).toString())
         binding.inputItem.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(s: Editable) {
-                if (!TextUtils.isEmpty(s.toString())) {
-                    item.value = s.toString().toInt()
+                val string = s.toString()
+                if (TextUtils.isEmpty(string).not()) {
+                    item.value = if (item.operation == "subtract") string.toInt() * -1 else string.toInt()
                 }
             }
 
