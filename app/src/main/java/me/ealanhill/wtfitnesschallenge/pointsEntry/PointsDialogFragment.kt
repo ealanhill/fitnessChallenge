@@ -7,7 +7,6 @@ import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -15,18 +14,21 @@ import android.view.View
 import me.ealanhill.wtfitnesschallenge.CalendarViewModel
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.R
+import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
 import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
+import me.ealanhill.wtfitnesschallenge.state.PointEntryState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
 import java.util.*
 
 class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
     private lateinit var mainStore: MainStore
+    private lateinit var pointEntryViewModel: PointEntryViewModel
     private lateinit var dateItem: DateItem
-    private lateinit var items: List<EntryFormItem>
 
+    private var items: List<EntryFormItem> = Collections.emptyList()
     private var dayId: Int = -1
 
     private val registry = LifecycleRegistry(this)
@@ -35,12 +37,10 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
     companion object {
         private val ID = "id"
-        private val ITEMS = "items"
 
-        fun newInstance(id: Int, items: List<EntryFormItem>): PointsDialogFragment {
+        fun newInstance(id: Int): PointsDialogFragment {
             val args: Bundle = Bundle()
             args.putInt(ID, id)
-            args.putParcelableArrayList(ITEMS, items.toMutableList() as ArrayList<out Parcelable>)
             val fragment: PointsDialogFragment = PointsDialogFragment()
             fragment.arguments = args
             return fragment
@@ -52,8 +52,9 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
         mainStore = ViewModelProviders.of(activity as AppCompatActivity)
                 .get(CalendarViewModel::class.java)
                 .store
+        pointEntryViewModel = ViewModelProviders.of(this).get(PointEntryViewModel::class.java)
         dayId = arguments.getInt(ID)
-        items = arguments.getParcelableArrayList(ITEMS)
+        pointEntryViewModel.store.dispatch(LoadActionCreator().getEntryForm())
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -65,12 +66,17 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                     pointsRecyclerVew.adapter = PointsEntryAdapter(items)
                 }
 
-        for (item: DateItem in mainStore.state.dateItems) {
-            if (item.date == dayId) {
-                dateItem = item
-                break
-            }
-        }
+        pointEntryViewModel.state
+                .observe(this, android.arch.lifecycle.Observer<PointEntryState> {
+                    data ->
+                    data?.let {
+                        binding.loading.visibility = if (data.loading) View.VISIBLE else View.GONE
+                        items = data.entryFormItems
+                        (binding.pointsRecyclerVew.adapter as PointsEntryAdapter).setState(items)
+                    }
+                })
+
+        dateItem = mainStore.state.getDate(dayId)
 
         return AlertDialog.Builder(activity, theme)
                 .setTitle(getString(R.string.date_format, dateItem.month, dateItem.date))
@@ -81,7 +87,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                         points.put(entryFormItem.name, entryFormItem.value)
                     }
                     mainStore.dispatch(UpdateCalendarPointsAction.create(dateItem, points))
-                    mainStore.dispatch(UploadPointsAction(items, dateItem.month, dateItem.date))
+                    pointEntryViewModel.store.dispatch(UploadPointsAction(items, dateItem.month, dateItem.date))
                 })
                 .create()
     }

@@ -40,5 +40,6 @@ class PointsEntryAdapter(var items: List<EntryFormItem> = Collections.emptyList(
 
     fun setState(newItems: List<EntryFormItem>) {
         items = newItems
+        notifyDataSetChanged()
     }
 }

@@ -8,8 +8,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
 import me.ealanhill.wtfitnesschallenge.pointsEntry.EntryFormItem
@@ -22,11 +21,8 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     private lateinit var binding: ActivityCalendarBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var store: MainStore
-    private lateinit var database: DatabaseReference
 
     private val registry = LifecycleRegistry(this)
-    private val items: MutableList<EntryFormItem> = ArrayList<EntryFormItem>()
-    private val tag: String = "CalendarActivity"
 
     override fun getLifecycle(): LifecycleRegistry = registry
 
@@ -54,26 +50,10 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
                 (binding.calendarRecyclerView.adapter as CalendarAdapter).setState(data.dateItems)
             }
         })
-
-        database = FirebaseDatabase.getInstance().getReference("pointEntryForm")
-        database.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(databaseError: DatabaseError?) {
-                if (databaseError != null) {
-                    Log.e(tag, databaseError.toString())
-                }
-            }
-
-            override fun onDataChange(databaseSnapshot: DataSnapshot?) {
-                databaseSnapshot?.children?.forEach { child: DataSnapshot? ->
-                    items.add(child?.getValue(EntryFormItem::class.java)!!)
-                }
-            }
-
-        })
     }
 
     override fun onClick(dateItem: DateItem) {
-        PointsDialogFragment.newInstance(dateItem.date, items)
+        PointsDialogFragment.newInstance(dateItem.date)
                 .show(supportFragmentManager, "dialog")
     }
 }
