@@ -6,23 +6,24 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import me.ealanhill.wtfitnesschallenge.R
+import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import java.util.*
 
-class PointsEntryAdapter(var items: List<EntryFormItem> = Collections.emptyList()):
+class PointsEntryAdapter(var models: List<EntryFormModel> = Collections.emptyList()):
         RecyclerView.Adapter<PointsViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
-        if (items[position].type == "pointEntry") {
+        if (models[position].type == "pointEntry") {
             return R.layout.item_point_entry
-        } else if (items[position].type == "yesNo") {
+        } else if (models[position].type == "yesNo") {
             return R.layout.item_yes_no
         }
 
-        throw IllegalArgumentException("Unknown type " + items[position].type)
+        throw IllegalArgumentException("Unknown type " + models[position].type)
     }
 
     override fun onBindViewHolder(holder: PointsViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(models[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointsViewHolder {
@@ -36,10 +37,10 @@ class PointsEntryAdapter(var items: List<EntryFormItem> = Collections.emptyList(
         throw IllegalArgumentException("Unknown type " + viewType)
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = models.size
 
-    fun setState(newItems: List<EntryFormItem>) {
-        items = newItems
+    fun setState(newModels: List<EntryFormModel>) {
+        models = newModels
         notifyDataSetChanged()
     }
 }

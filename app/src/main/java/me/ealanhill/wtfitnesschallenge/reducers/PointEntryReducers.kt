@@ -4,7 +4,7 @@ import com.google.firebase.database.FirebaseDatabase
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.GetEntryFormItemsAction
 import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
-import me.ealanhill.wtfitnesschallenge.pointsEntry.EntryFormItem
+import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import me.ealanhill.wtfitnesschallenge.state.PointEntryState
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
@@ -20,7 +20,7 @@ object PointEntryReducers {
     fun getEntryFormItems(): Reducer<GetEntryFormItemsAction, PointEntryState> {
         return Reducer { action, state ->
             val items = action.items()
-            state.copy(loading = false, entryFormItems = items)
+            state.copy(loading = false, entryFormModels = items)
         }
     }
 
@@ -28,9 +28,9 @@ object PointEntryReducers {
         return Reducer { action, state ->
             val database = FirebaseDatabase.getInstance().getReference(action.month).child(Integer.toString(action.day))
             var total = 0
-            action.items.forEach { entryFormItem: EntryFormItem ->
-                database.child("user 1").child(entryFormItem.name).setValue(entryFormItem.value)
-                total += entryFormItem.value
+            action.models.forEach { entryFormModel: EntryFormModel ->
+                database.child("user 1").child(entryFormModel.name).setValue(entryFormModel.value)
+                total += entryFormModel.value
             }
             database.child("user 1").child("total").setValue(total)
 

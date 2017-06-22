@@ -1,7 +1,7 @@
 package me.ealanhill.wtfitnesschallenge.state
 
-import me.ealanhill.wtfitnesschallenge.pointsEntry.EntryFormItem
+import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import java.util.*
 
 data class PointEntryState(val loading: Boolean = true,
-                           val entryFormItems: List<EntryFormItem> = Collections.emptyList())
+                           val entryFormModels: List<EntryFormModel> = Collections.emptyList())

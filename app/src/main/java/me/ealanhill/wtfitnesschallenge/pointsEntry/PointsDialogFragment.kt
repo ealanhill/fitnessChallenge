@@ -18,6 +18,7 @@ import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
 import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
+import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import me.ealanhill.wtfitnesschallenge.state.PointEntryState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
 import java.util.*
@@ -28,7 +29,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
     private lateinit var pointEntryViewModel: PointEntryViewModel
     private lateinit var dateItem: DateItem
 
-    private var items: List<EntryFormItem> = Collections.emptyList()
+    private var models: List<EntryFormModel> = Collections.emptyList()
     private var dayId: Int = -1
 
     private val registry = LifecycleRegistry(this)
@@ -54,7 +55,8 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                 .store
         pointEntryViewModel = ViewModelProviders.of(this).get(PointEntryViewModel::class.java)
         dayId = arguments.getInt(ID)
-        pointEntryViewModel.store.dispatch(LoadActionCreator().getEntryForm())
+        dateItem = mainStore.state.getDate(dayId)
+        pointEntryViewModel.store.dispatch(LoadActionCreator().getEntryForm(dateItem.month, dayId))
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -63,7 +65,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                 .apply {
                     pointsRecyclerVew.setHasFixedSize(true)
                     pointsRecyclerVew.layoutManager = LinearLayoutManager(activity)
-                    pointsRecyclerVew.adapter = PointsEntryAdapter(items)
+                    pointsRecyclerVew.adapter = PointsEntryAdapter(models)
                 }
 
         pointEntryViewModel.state
@@ -71,23 +73,21 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                     data ->
                     data?.let {
                         binding.loading.visibility = if (data.loading) View.VISIBLE else View.GONE
-                        items = data.entryFormItems
-                        (binding.pointsRecyclerVew.adapter as PointsEntryAdapter).setState(items)
+                        models = data.entryFormModels
+                        (binding.pointsRecyclerVew.adapter as PointsEntryAdapter).setState(models)
                     }
                 })
-
-        dateItem = mainStore.state.getDate(dayId)
 
         return AlertDialog.Builder(activity, theme)
                 .setTitle(getString(R.string.date_format, dateItem.month, dateItem.date))
                 .setView(view)
                 .setPositiveButton(android.R.string.ok, { dialog, which ->
                     val points: MutableMap<String, Int> = mutableMapOf()
-                    items.map { entryFormItem ->
+                    models.map { entryFormItem ->
                         points.put(entryFormItem.name, entryFormItem.value)
                     }
                     mainStore.dispatch(UpdateCalendarPointsAction.create(dateItem, points))
-                    pointEntryViewModel.store.dispatch(UploadPointsAction(items, dateItem.month, dateItem.date))
+                    pointEntryViewModel.store.dispatch(UploadPointsAction(models, dateItem.month, dateItem.date))
                 })
                 .create()
     }

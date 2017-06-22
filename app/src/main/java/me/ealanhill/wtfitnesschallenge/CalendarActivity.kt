@@ -8,10 +8,8 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import com.google.firebase.database.DatabaseReference
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
-import me.ealanhill.wtfitnesschallenge.pointsEntry.EntryFormItem
 import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.ealanhill.wtfitnesschallenge.store.MainStore

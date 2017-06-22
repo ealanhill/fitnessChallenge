@@ -1,7 +1,7 @@
 package me.ealanhill.wtfitnesschallenge.action
 
-import me.ealanhill.wtfitnesschallenge.pointsEntry.EntryFormItem
+import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 
-data class UploadPointsAction(val items: List<EntryFormItem>,
+data class UploadPointsAction(val models: List<EntryFormModel>,
                               val month: String,
                               val day: Int): Action

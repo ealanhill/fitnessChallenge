@@ -1,17 +1,17 @@
 package me.ealanhill.wtfitnesschallenge.action
 
-import me.ealanhill.wtfitnesschallenge.pointsEntry.EntryFormItem
+import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import java.util.*
 
 object GetEntryFormItemsAction: Action {
-    private var items: List<EntryFormItem> = Collections.emptyList()
+    private var models: List<EntryFormModel> = Collections.emptyList()
 
-    fun create(items: List<EntryFormItem>): GetEntryFormItemsAction {
-        this.items = items
+    fun create(models: List<EntryFormModel>): GetEntryFormItemsAction {
+        this.models = models
         return this
     }
 
-    fun items(): List<EntryFormItem> {
-        return this.items
+    fun items(): List<EntryFormModel> {
+        return this.models
     }
 }

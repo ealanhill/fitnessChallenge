@@ -1,9 +1,9 @@
-package me.ealanhill.wtfitnesschallenge.pointsEntry
+package me.ealanhill.wtfitnesschallenge.model
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class EntryFormItem(
+data class EntryFormModel(
         val name: String = "",
         val label: String = "",
         val type: String = "",
@@ -13,13 +13,13 @@ data class EntryFormItem(
     companion object {
         @JvmField
         @Suppress("unused")
-        val CREATOR: Parcelable.Creator<EntryFormItem> = object : Parcelable.Creator<EntryFormItem> {
-            override fun createFromParcel(source: Parcel): EntryFormItem {
-                return EntryFormItem(source)
+        val CREATOR: Parcelable.Creator<EntryFormModel> = object : Parcelable.Creator<EntryFormModel> {
+            override fun createFromParcel(source: Parcel): EntryFormModel {
+                return EntryFormModel(source)
             }
 
-            override fun newArray(size: Int): Array<EntryFormItem> {
-                return Array(size, {_ -> EntryFormItem() })
+            override fun newArray(size: Int): Array<EntryFormModel> {
+                return Array(size, {_ -> EntryFormModel() })
             }
         }
     }
