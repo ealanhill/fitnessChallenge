@@ -56,7 +56,8 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
         pointEntryViewModel = ViewModelProviders.of(this).get(PointEntryViewModel::class.java)
         dayId = arguments.getInt(ID)
         dateItem = mainStore.state.getDate(dayId)
-        pointEntryViewModel.store.dispatch(LoadActionCreator().getEntryForm(dateItem.month, dayId))
+        val year = mainStore.state.calendar.get(Calendar.YEAR)
+        pointEntryViewModel.store.dispatch(LoadActionCreator().getEntryForm(year, dateItem.month, dayId))
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -87,7 +88,8 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
                         points.put(entryFormItem.name, entryFormItem.value)
                     }
                     mainStore.dispatch(UpdateCalendarPointsAction.create(dateItem, points))
-                    pointEntryViewModel.store.dispatch(UploadPointsAction(models, dateItem.month, dateItem.date))
+                    pointEntryViewModel.store.dispatch(UploadPointsAction(models, dateItem.year,
+                            dateItem.month, dateItem.date))
                 })
                 .create()
     }

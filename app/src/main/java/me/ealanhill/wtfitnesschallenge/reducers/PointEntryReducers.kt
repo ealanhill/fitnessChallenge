@@ -26,13 +26,19 @@ object PointEntryReducers {
 
     fun updateFirebaseDatabase(): Reducer<UploadPointsAction, PointEntryState> {
         return Reducer { action, state ->
-            val database = FirebaseDatabase.getInstance().getReference(action.month).child(Integer.toString(action.day))
+            val database = FirebaseDatabase.getInstance()
+                    .getReference("entries")
+                    .child("EsSFN71XaTPB9iWis3pPXAsJemG2")
+                    .child(action.year.toString())
+                    .child(action.month)
+                    .child(Integer.toString(action.day))
             var total = 0
             action.models.forEach { entryFormModel: EntryFormModel ->
-                database.child("user 1").child(entryFormModel.name).setValue(entryFormModel.value)
+                database.child(entryFormModel.name).setValue(entryFormModel.value)
                 total += entryFormModel.value
             }
-            database.child("user 1").child("total").setValue(total)
+            database.child("total")
+                    .setValue(total)
 
             state
         }

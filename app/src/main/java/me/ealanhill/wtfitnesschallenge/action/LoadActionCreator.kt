@@ -16,11 +16,11 @@ class LoadActionCreator {
         return Thunk { dispatcher ->
             val database = FirebaseDatabase.getInstance().reference
             val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR).toString()
+            val year = calendar.get(Calendar.YEAR)
             val month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US)
             database.child("entries")
                     .child("EsSFN71XaTPB9iWis3pPXAsJemG2")
-                    .child(year)
+                    .child(year.toString())
                     .child(month)
                     .addChildEventListener(object: ChildEventListener {
                         override fun onCancelled(databaseError: DatabaseError) {
@@ -40,7 +40,7 @@ class LoadActionCreator {
                             Log.i(tag, "onChildAdded")
                             val map = dataSnapshot.getValue(object: GenericTypeIndicator<Map<@JvmSuppressWildcards String, @JvmSuppressWildcards Int>>() {})
                             map?.apply {
-                                dispatcher.dispatch(UpdateCalendarPointsAction.create(DateItem(month, dataSnapshot.key.toInt(), 0, map), map))
+                                dispatcher.dispatch(UpdateCalendarPointsAction.create(DateItem(year, month, dataSnapshot.key.toInt(), 0, map), map))
                             }
                         }
 
@@ -52,7 +52,7 @@ class LoadActionCreator {
         }
     }
 
-    fun getEntryForm(month: String, day: Int): Thunk<Action, Action> {
+    fun getEntryForm(year: Int, month: String, day: Int): Thunk<Action, Action> {
         return Thunk { dispatcher ->
             val database = FirebaseDatabase.getInstance().reference
             val items = ArrayList<EntryFormModel>(0)
@@ -67,20 +67,23 @@ class LoadActionCreator {
                     databaseSnapshot?.children?.forEach { child: DataSnapshot? ->
                         items.add(child?.getValue(EntryFormModel::class.java)!!)
                     }
-                    getEntryFormUserPoints(dispatcher, month, day, items)
+                    getEntryFormUserPoints(dispatcher,year, month, day, items)
                 }
             })
         }
     }
 
     private fun getEntryFormUserPoints(dispatcher: Dispatcher<Action, Action>,
+                                       year: Int,
                                        month: String,
                                        day: Int,
                                        models: ArrayList<EntryFormModel>) {
         val database = FirebaseDatabase.getInstance().reference
-        database.child(month)
-                .child(Integer.toString(day))
-                .child("user 1")
+        database.child("entries")
+                .child("EsSFN71XaTPB9iWis3pPXAsJemG2")
+                .child(year.toString())
+                .child(month)
+                .child(day.toString())
                 .addListenerForSingleValueEvent(object: ValueEventListener{
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.e(tag, toString())

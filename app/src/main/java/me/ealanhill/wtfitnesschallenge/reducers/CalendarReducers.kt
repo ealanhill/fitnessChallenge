@@ -25,10 +25,11 @@ object CalendarReducers {
             val calendar = state.calendar
             calendar.set(Calendar.DAY_OF_MONTH, 1)
             val daysInMonth: Int = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-            val dates: MutableList<DateItem> = ArrayList<DateItem>()
-            val month:String = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US)
+            val year: Int = calendar.get(Calendar.YEAR)
+            val dates: MutableList<DateItem> = ArrayList()
+            val month:String = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US)
             (1..daysInMonth).forEach {
-                day -> dates.add(DateItem(month, day, 0, Collections.emptyMap()))
+                day -> dates.add(DateItem(year, month, day, 0, Collections.emptyMap()))
             }
             state.copy(dateItems = dates, calendar = calendar)
         }
@@ -37,8 +38,12 @@ object CalendarReducers {
     fun updateCalendarPoints(): Reducer<UpdateCalendarPointsAction, CalendarState> {
         return Reducer { action, state ->
             var pointsTotal: Int = 0
-            action.points().forEach { _, value ->
-                pointsTotal += value
+            if (action.points()["total"] == null) {
+                action.points().forEach { key, value ->
+                    pointsTotal += value
+                }
+            } else {
+                pointsTotal = action.points()["total"]!!
             }
 
             val dateItems = ArrayList<DateItem>()
@@ -58,7 +63,8 @@ object CalendarReducers {
 
     private fun copy(oldList: List<DateItem>, newList: MutableList<DateItem>) {
         oldList.forEach { dateItem: DateItem ->
-            newList.add(DateItem(dateItem.month, dateItem.date, dateItem.totalPoints, dateItem.pointsMap))
+            newList.add(DateItem(dateItem.year, dateItem.month, dateItem.date,
+                    dateItem.totalPoints, dateItem.pointsMap))
         }
     }
 }
