@@ -8,11 +8,18 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
+import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
 import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
+import java.util.*
 
 class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAdapter.CalendarOnClickListener {
 
@@ -21,6 +28,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     private lateinit var store: MainStore
 
     private val registry = LifecycleRegistry(this)
+    private val TAG = "CalendarAcivity"
 
     override fun getLifecycle(): LifecycleRegistry = registry
 
@@ -41,6 +49,8 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
         if (savedInstanceState == null) {
             store.dispatch(InitializeCalendarAction)
         }
+
+        store.dispatch(LoadActionCreator().initializeMonth())
 
         calendarViewModel.state.observe(this, Observer<CalendarState> {
             data ->

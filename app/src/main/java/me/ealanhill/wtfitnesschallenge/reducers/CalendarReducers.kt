@@ -1,5 +1,7 @@
 package me.ealanhill.wtfitnesschallenge.reducers
 
+import android.util.Log
+import com.google.firebase.database.*
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
