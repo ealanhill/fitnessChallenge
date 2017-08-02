@@ -1,14 +1,20 @@
 package me.ealanhill.wtfitnesschallenge
 
+import android.app.Activity
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.Toast
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,8 +32,11 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     private lateinit var binding: ActivityCalendarBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var store: MainStore
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     private val registry = LifecycleRegistry(this)
+    private val SIGN_IN = 1
     private val TAG = "CalendarAcivity"
 
     override fun getLifecycle(): LifecycleRegistry = registry
@@ -36,6 +45,27 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
         super.onCreate(savedInstanceState)
         linearLayoutManager = LinearLayoutManager(this)
 
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            val user = firebaseAuth.currentUser
+            if (user != null) {
+                initializeAfterSignIn(savedInstanceState)
+            } else {
+                startActivityForResult(
+                        AuthUI.getInstance()
+                                .createSignInIntentBuilder()
+                                .setIsSmartLockEnabled(false)
+                                .setAvailableProviders(mutableListOf(
+                                        AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
+                                )).build(),
+                        SIGN_IN
+                )
+            }
+        }
+    }
+
+    private fun initializeAfterSignIn(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView<ActivityCalendarBinding>(this, R.layout.activity_calendar)
                 .apply {
                     calendarRecyclerView.setHasFixedSize(true)
@@ -60,8 +90,32 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
         })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SIGN_IN) {
+            when (resultCode) {
+                Activity.RESULT_OK ->
+                    Toast.makeText(this, "Signed In!", Toast.LENGTH_SHORT).show()
+                Activity.RESULT_CANCELED ->
+                    Toast.makeText(this, "Sign in cancelled", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onClick(dateItem: DateItem) {
         PointsDialogFragment.newInstance(dateItem.date)
                 .show(supportFragmentManager, "dialog")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        authStateListener?.apply {
+            firebaseAuth.removeAuthStateListener(authStateListener)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        firebaseAuth.addAuthStateListener(authStateListener)
     }
 }
