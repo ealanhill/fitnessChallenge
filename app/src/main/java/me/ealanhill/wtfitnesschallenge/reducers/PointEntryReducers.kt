@@ -6,6 +6,7 @@ import me.ealanhill.wtfitnesschallenge.CalendarActivity
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.GetEntryFormItemsAction
 import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
+import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
 import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import me.ealanhill.wtfitnesschallenge.state.PointEntryState
 import me.tatarka.redux.Reducer
@@ -37,7 +38,7 @@ class PointEntryReducers {
     fun updateFirebaseDatabase(): Reducer<UploadPointsAction, PointEntryState> {
         return Reducer { (models, year, month, day), state ->
             val database = FirebaseDatabase.getInstance()
-                    .getReference("entries")
+                    .getReference(DatabaseTables.ENTRIES)
                     .child(user.uid)
                     .child(year.toString())
                     .child(month)

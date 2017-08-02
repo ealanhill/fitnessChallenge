@@ -7,6 +7,7 @@ import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.action.UserAction
+import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
@@ -40,7 +41,7 @@ object CalendarReducers {
     fun addNewUserReducer(): Reducer<UserAction, CalendarState> {
         return Reducer { (user), state ->
             val database = FirebaseDatabase.getInstance()
-                    .getReference("users")
+                    .getReference(DatabaseTables.ENTRIES)
 
             database.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {

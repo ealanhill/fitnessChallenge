@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import me.ealanhill.wtfitnesschallenge.DateItem
+import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
 import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import me.tatarka.redux.Dispatcher
 import me.tatarka.redux.Thunk
@@ -22,7 +23,7 @@ class LoadActionCreator @Inject constructor(private val user: FirebaseUser) {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US)
-            database.child("entries")
+            database.child(DatabaseTables.ENTRIES)
                     .child(user.uid)
                     .child(year.toString())
                     .child(month)
@@ -65,7 +66,7 @@ class LoadActionCreator @Inject constructor(private val user: FirebaseUser) {
         return Thunk { dispatcher ->
             val database = FirebaseDatabase.getInstance().reference
             val items = ArrayList<EntryFormModel>(0)
-            database.child("pointEntryForm").addListenerForSingleValueEvent(object: ValueEventListener {
+            database.child(DatabaseTables.POINT_ENTRY_FORM).addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError?) {
                     databaseError?.let {
                         Log.e(tag, toString())
@@ -88,7 +89,7 @@ class LoadActionCreator @Inject constructor(private val user: FirebaseUser) {
                                        day: Int,
                                        models: ArrayList<EntryFormModel>) {
         val database = FirebaseDatabase.getInstance().reference
-        database.child("entries")
+        database.child(DatabaseTables.ENTRIES)
                 .child(user.uid)
                 .child(year.toString())
                 .child(month)
