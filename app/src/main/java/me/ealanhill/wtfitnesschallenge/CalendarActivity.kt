@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
+import me.ealanhill.wtfitnesschallenge.action.UserAction
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
 import me.ealanhill.wtfitnesschallenge.di.*
 import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
@@ -37,6 +38,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var loadActionCreator: LoadActionCreator
+    private lateinit var calendarViewModel: CalendarViewModel
 
     private val registry = LifecycleRegistry(this)
     private val SIGN_IN = 1
@@ -50,7 +52,6 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        linearLayoutManager = LinearLayoutManager(this)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -61,6 +62,11 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
                 loadActionCreatorComponent = DaggerLoadActionCreatorComponent.builder()
                         .loadActionCreatorModule(LoadActionCreatorModule(loadActionCreator))
                         .build()
+
+                calendarViewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
+                store = calendarViewModel.store
+                store.dispatch(UserAction(user))
+
                 initializeAfterSignIn(savedInstanceState)
             } else {
                 startActivityForResult(
@@ -77,15 +83,14 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     }
 
     private fun initializeAfterSignIn(savedInstanceState: Bundle?) {
+        linearLayoutManager = LinearLayoutManager(this)
+
         binding = DataBindingUtil.setContentView<ActivityCalendarBinding>(this, R.layout.activity_calendar)
                 .apply {
                     calendarRecyclerView.setHasFixedSize(true)
                     calendarRecyclerView.layoutManager = linearLayoutManager
                     calendarRecyclerView.adapter = CalendarAdapter(this@CalendarActivity)
                 }
-
-        val calendarViewModel: CalendarViewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
-        store = calendarViewModel.store
 
         if (savedInstanceState == null) {
             store.dispatch(InitializeCalendarAction)

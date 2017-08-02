@@ -37,19 +37,24 @@ class LoadActionCreator @Inject constructor(private val user: FirebaseUser) {
 
                         override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
                             Log.i(tag, "onChildChanged")
+                            updateCalendar(dataSnapshot)
                         }
 
                         override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
                             // TODO: this gets called when the app is loaded
                             Log.i(tag, "onChildAdded")
-                            val map = dataSnapshot.getValue(object: GenericTypeIndicator<Map<@JvmSuppressWildcards String, @JvmSuppressWildcards Int>>() {})
-                            map?.apply {
-                                dispatcher.dispatch(UpdateCalendarPointsAction.create(DateItem(year, month, dataSnapshot.key.toInt(), 0, map), map))
-                            }
+                            updateCalendar(dataSnapshot)
                         }
 
                         override fun onChildRemoved(dataSnapshot: DataSnapshot) {
                             Log.i(tag, "onChildRemoved")
+                        }
+
+                        private fun updateCalendar(dataSnapshot: DataSnapshot) {
+                            val map = dataSnapshot.getValue(object: GenericTypeIndicator<Map<@JvmSuppressWildcards String, @JvmSuppressWildcards Int>>() {})
+                            map?.apply {
+                                dispatcher.dispatch(UpdateCalendarPointsAction.create(DateItem(year, month, dataSnapshot.key.toInt(), 0, map), map))
+                            }
                         }
 
                     })

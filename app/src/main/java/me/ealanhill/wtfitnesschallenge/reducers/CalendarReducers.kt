@@ -6,6 +6,7 @@ import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
+import me.ealanhill.wtfitnesschallenge.action.UserAction
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
@@ -17,6 +18,7 @@ object CalendarReducers {
     fun reducer(): Reducer<Action, CalendarState> {
         return Reducers.matchClass<Action, CalendarState>()
                 .`when`(InitializeCalendarAction::class.java, initializeCalendar())
+                .`when`(UserAction::class.java, addNewUserReducer())
                 .`when`(UpdateCalendarPointsAction::class.java, updateCalendarPoints())
     }
 
@@ -32,6 +34,31 @@ object CalendarReducers {
                 day -> dates.add(DateItem(year, month, day, 0, Collections.emptyMap()))
             }
             state.copy(dateItems = dates, calendar = calendar)
+        }
+    }
+
+    fun addNewUserReducer(): Reducer<UserAction, CalendarState> {
+        return Reducer { action, state ->
+            val database = FirebaseDatabase.getInstance()
+                    .getReference("users")
+
+            database.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // do nothing
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (!dataSnapshot.child(action.user.uid).exists()) {
+                        database.child(action.user.uid)
+                                .updateChildren(mapOf(
+                                        "email" to action.user.email,
+                                        "name" to action.user.displayName))
+                    }
+                }
+
+            })
+
+            state
         }
     }
 
