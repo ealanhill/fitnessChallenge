@@ -40,6 +40,13 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
+              "client_id": "382937276315-tc26vgtble7a5991gkdipind92trault.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.willowtreeapps.Fitness-Challenge"
+              }
+            },
+            {
               "client_id": "382937276315-00tdvk139d3fiajcvtm2hqkqhkjk31tu.apps.googleusercontent.com",
               "client_type": 3
             }

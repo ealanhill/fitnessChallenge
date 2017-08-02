@@ -1,14 +1,18 @@
 package me.ealanhill.wtfitnesschallenge.action
 
 import android.util.Log
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import me.tatarka.redux.Dispatcher
 import me.tatarka.redux.Thunk
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LoadActionCreator {
+@Singleton
+class LoadActionCreator @Inject constructor(private val user: FirebaseUser) {
 
     private val tag = "LoadActionCreator"
 

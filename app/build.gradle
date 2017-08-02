@@ -50,19 +50,14 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:11.0.4'
     compile 'com.firebaseui:firebase-ui-auth:2.1.1'
 
+    // Dagger 2
+    kapt 'com.google.dagger:dagger-compiler:2.11'
+    compile 'com.google.dagger:dagger:2.11'
+
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     kapt "com.android.databinding:compiler:$plugin_version"
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
-    maven {
-        url "https://maven.google.com"
-    }
-}
-
 apply plugin: 'com.google.gms.google-services'
+

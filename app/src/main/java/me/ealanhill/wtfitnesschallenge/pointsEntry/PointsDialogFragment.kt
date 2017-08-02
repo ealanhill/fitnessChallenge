@@ -11,6 +11,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import me.ealanhill.wtfitnesschallenge.CalendarActivity
 import me.ealanhill.wtfitnesschallenge.CalendarViewModel
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.R
@@ -22,12 +23,16 @@ import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import me.ealanhill.wtfitnesschallenge.state.PointEntryState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
 import java.util.*
+import javax.inject.Inject
 
 class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
     private lateinit var mainStore: MainStore
     private lateinit var pointEntryViewModel: PointEntryViewModel
     private lateinit var dateItem: DateItem
+
+    @Inject
+    lateinit var loadActionCreator: LoadActionCreator
 
     private var models: List<EntryFormModel> = Collections.emptyList()
     private var dayId: Int = -1
@@ -50,6 +55,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CalendarActivity.loadActionCreatorComponent.inject(this)
         mainStore = ViewModelProviders.of(activity as AppCompatActivity)
                 .get(CalendarViewModel::class.java)
                 .store
@@ -57,7 +63,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
         dayId = arguments.getInt(ID)
         dateItem = mainStore.state.getDate(dayId)
         val year = mainStore.state.calendar.get(Calendar.YEAR)
-        pointEntryViewModel.store.dispatch(LoadActionCreator().getEntryForm(year, dateItem.month, dayId))
+        pointEntryViewModel.store.dispatch(loadActionCreator.getEntryForm(year, dateItem.month, dayId))
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

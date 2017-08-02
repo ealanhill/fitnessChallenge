@@ -22,10 +22,12 @@ import com.google.firebase.database.FirebaseDatabase
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
+import me.ealanhill.wtfitnesschallenge.di.*
 import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
 import me.ealanhill.wtfitnesschallenge.state.CalendarState
 import me.ealanhill.wtfitnesschallenge.store.MainStore
 import java.util.*
+import javax.inject.Inject
 
 class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAdapter.CalendarOnClickListener {
 
@@ -34,10 +36,15 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     private lateinit var store: MainStore
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
+    private lateinit var loadActionCreator: LoadActionCreator
 
     private val registry = LifecycleRegistry(this)
     private val SIGN_IN = 1
     private val TAG = "CalendarAcivity"
+
+    companion object {
+        lateinit var loadActionCreatorComponent: LoadActionCreatorComponent
+    }
 
     override fun getLifecycle(): LifecycleRegistry = registry
 
@@ -50,6 +57,10 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
+                loadActionCreator = LoadActionCreator(user)
+                loadActionCreatorComponent = DaggerLoadActionCreatorComponent.builder()
+                        .loadActionCreatorModule(LoadActionCreatorModule(loadActionCreator))
+                        .build()
                 initializeAfterSignIn(savedInstanceState)
             } else {
                 startActivityForResult(
@@ -80,7 +91,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
             store.dispatch(InitializeCalendarAction)
         }
 
-        store.dispatch(LoadActionCreator().initializeMonth())
+        store.dispatch(loadActionCreator.initializeMonth())
 
         calendarViewModel.state.observe(this, Observer<CalendarState> {
             data ->
