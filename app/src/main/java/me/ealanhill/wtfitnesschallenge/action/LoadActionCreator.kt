@@ -23,7 +23,7 @@ class LoadActionCreator @Inject constructor(private val user: FirebaseUser) {
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US)
             database.child("entries")
-                    .child("EsSFN71XaTPB9iWis3pPXAsJemG2")
+                    .child(user.uid)
                     .child(year.toString())
                     .child(month)
                     .addChildEventListener(object: ChildEventListener {
@@ -89,7 +89,7 @@ class LoadActionCreator @Inject constructor(private val user: FirebaseUser) {
                                        models: ArrayList<EntryFormModel>) {
         val database = FirebaseDatabase.getInstance().reference
         database.child("entries")
-                .child("EsSFN71XaTPB9iWis3pPXAsJemG2")
+                .child(user.uid)
                 .child(year.toString())
                 .child(month)
                 .child(day.toString())

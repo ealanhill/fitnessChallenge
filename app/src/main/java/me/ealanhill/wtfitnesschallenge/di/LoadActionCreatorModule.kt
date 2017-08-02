@@ -5,7 +5,8 @@ import dagger.Provides
 import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
 import javax.inject.Singleton
 
-@Module class LoadActionCreatorModule(val loadActionCreator: LoadActionCreator) {
+@Module
+class LoadActionCreatorModule(val loadActionCreator: LoadActionCreator) {
 
     @Provides
     @Singleton

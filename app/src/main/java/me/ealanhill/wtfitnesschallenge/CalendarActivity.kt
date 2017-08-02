@@ -61,6 +61,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
                 loadActionCreator = LoadActionCreator(user)
                 loadActionCreatorComponent = DaggerLoadActionCreatorComponent.builder()
                         .loadActionCreatorModule(LoadActionCreatorModule(loadActionCreator))
+                        .userModule(UserModule(user))
                         .build()
 
                 calendarViewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)

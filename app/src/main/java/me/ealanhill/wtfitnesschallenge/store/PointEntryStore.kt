@@ -1,5 +1,6 @@
 package me.ealanhill.wtfitnesschallenge.store
 
+import me.ealanhill.wtfitnesschallenge.CalendarActivity
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.reducers.PointEntryReducers
 import me.ealanhill.wtfitnesschallenge.state.PointEntryState
@@ -9,7 +10,7 @@ import me.tatarka.redux.Thunk
 import me.tatarka.redux.ThunkDispatcher
 
 class PointEntryStore : SimpleStore<PointEntryState>(PointEntryState()) {
-    val dispatcher: Dispatcher<Action, Action> = Dispatcher.forStore(this, PointEntryReducers.reducer())
+    val dispatcher: Dispatcher<Action, Action> = Dispatcher.forStore(this, PointEntryReducers().reducer())
     val thunkDispatcher: Dispatcher<Thunk<Action, Action>, Void> = ThunkDispatcher(dispatcher)
 
     fun dispatch(action: Action): Action {

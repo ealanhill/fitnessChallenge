@@ -1,6 +1,8 @@
 package me.ealanhill.wtfitnesschallenge.reducers
 
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
+import me.ealanhill.wtfitnesschallenge.CalendarActivity
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.GetEntryFormItemsAction
 import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
@@ -8,8 +10,16 @@ import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import me.ealanhill.wtfitnesschallenge.state.PointEntryState
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
+import javax.inject.Inject
 
-object PointEntryReducers {
+class PointEntryReducers {
+
+    init {
+        CalendarActivity.loadActionCreatorComponent.inject(this)
+    }
+
+    @Inject
+    lateinit var user: FirebaseUser
 
     fun reducer(): Reducer<Action, PointEntryState> {
         return Reducers.matchClass<Action, PointEntryState>()
@@ -28,7 +38,7 @@ object PointEntryReducers {
         return Reducer { (models, year, month, day), state ->
             val database = FirebaseDatabase.getInstance()
                     .getReference("entries")
-                    .child("EsSFN71XaTPB9iWis3pPXAsJemG2")
+                    .child(user.uid)
                     .child(year.toString())
                     .child(month)
                     .child(Integer.toString(day))

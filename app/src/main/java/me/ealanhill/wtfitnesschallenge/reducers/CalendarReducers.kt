@@ -38,7 +38,7 @@ object CalendarReducers {
     }
 
     fun addNewUserReducer(): Reducer<UserAction, CalendarState> {
-        return Reducer { action, state ->
+        return Reducer { (user), state ->
             val database = FirebaseDatabase.getInstance()
                     .getReference("users")
 
@@ -48,11 +48,11 @@ object CalendarReducers {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (!dataSnapshot.child(action.user.uid).exists()) {
-                        database.child(action.user.uid)
+                    if (!dataSnapshot.child(user.uid).exists()) {
+                        database.child(user.uid)
                                 .updateChildren(mapOf(
-                                        "email" to action.user.email,
-                                        "name" to action.user.displayName))
+                                        "email" to user.email,
+                                        "name" to user.displayName))
                     }
                 }
 
@@ -66,7 +66,7 @@ object CalendarReducers {
         return Reducer { action, state ->
             var pointsTotal: Int = 0
             if (action.points()["total"] == null) {
-                action.points().forEach { key, value ->
+                action.points().forEach { _, value ->
                     pointsTotal += value
                 }
             } else {
