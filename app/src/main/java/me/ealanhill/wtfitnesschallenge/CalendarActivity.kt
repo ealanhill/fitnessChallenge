@@ -6,11 +6,17 @@ import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBar
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -39,6 +45,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var loadActionCreator: LoadActionCreator
     private lateinit var calendarViewModel: CalendarViewModel
+    private lateinit var drawerToggle: ActionBarDrawerToggle
 
     private val registry = LifecycleRegistry(this)
     private val SIGN_IN = 1
@@ -91,6 +98,15 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
                     calendarRecyclerView.setHasFixedSize(true)
                     calendarRecyclerView.layoutManager = linearLayoutManager
                     calendarRecyclerView.adapter = CalendarAdapter(this@CalendarActivity)
+                    setSupportActionBar(toolbar)
+                    if (supportActionBar != null) {
+                        (supportActionBar as ActionBar).setDisplayHomeAsUpEnabled(true)
+                        drawerToggle = ActionBarDrawerToggle(this@CalendarActivity,
+                                drawer, toolbar, R.string.drawer_open, R.string.drawer_close)
+                        drawerToggle.isDrawerIndicatorEnabled = true
+                        drawerToggle.syncState()
+                    }
+                    drawer.addDrawerListener(drawerToggle)
                 }
 
         if (savedInstanceState == null) {
@@ -134,5 +150,23 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     override fun onResume() {
         super.onResume()
         firebaseAuth.addAuthStateListener(authStateListener)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onPostCreate(savedInstanceState, persistentState)
+        drawerToggle.syncState()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+        drawerToggle.onConfigurationChanged(newConfig)
     }
 }

@@ -9,4 +9,12 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <string name="calendar">Calendar</string>
+    <string name="team">Team</string>
+    <string name="standings">Standings</string>
+    <string name="logout">Logout</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
