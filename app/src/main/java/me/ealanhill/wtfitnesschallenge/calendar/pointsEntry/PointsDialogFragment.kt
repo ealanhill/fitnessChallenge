@@ -14,7 +14,7 @@ import me.ealanhill.wtfitnesschallenge.MainActivity
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarViewModel
 import me.ealanhill.wtfitnesschallenge.calendar.DateItem
 import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.calendar.action.LoadActionCreator
+import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
 import me.ealanhill.wtfitnesschallenge.calendar.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.calendar.action.UploadPointsAction
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
@@ -29,7 +29,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
     private lateinit var dateItem: DateItem
 
     @Inject
-    lateinit var loadActionCreator: LoadActionCreator
+    lateinit var calendarActionCreator: CalendarActionCreator
 
     private var models: List<EntryFormModel> = Collections.emptyList()
     private var dayId: Int = -1
@@ -60,7 +60,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
         dayId = arguments.getInt(ID)
         dateItem = calendarStore.state.getDate(dayId)
         val year = calendarStore.state.calendar.get(Calendar.YEAR)
-        pointEntryViewModel.store.dispatch(loadActionCreator.getEntryForm(year, dateItem.month, dayId))
+        pointEntryViewModel.store.dispatch(calendarActionCreator.getEntryForm(year, dateItem.month, dayId))
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

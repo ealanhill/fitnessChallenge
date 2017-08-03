@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseUser
 import me.ealanhill.wtfitnesschallenge.*
 import me.ealanhill.wtfitnesschallenge.calendar.action.InitializeCalendarAction
-import me.ealanhill.wtfitnesschallenge.calendar.action.LoadActionCreator
+import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
 import me.ealanhill.wtfitnesschallenge.calendar.action.UserAction
 import me.ealanhill.wtfitnesschallenge.databinding.FragmentCalendarBinding
 import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.PointsDialogFragment
@@ -28,7 +28,7 @@ class CalendarFragment: LifecycleFragment(), CalendarAdapter.CalendarOnClickList
     private lateinit var store: CalendarStore
 
     @Inject
-    lateinit var loadActionCreator: LoadActionCreator
+    lateinit var calendarActionCreator: CalendarActionCreator
     @Inject
     lateinit var user: FirebaseUser
 
@@ -60,7 +60,7 @@ class CalendarFragment: LifecycleFragment(), CalendarAdapter.CalendarOnClickList
             store.dispatch(InitializeCalendarAction)
         }
 
-        store.dispatch(loadActionCreator.initializeMonth())
+        store.dispatch(calendarActionCreator.initializeMonth())
 
         calendarViewModel.state.observe(this, Observer<CalendarState> {
             data ->

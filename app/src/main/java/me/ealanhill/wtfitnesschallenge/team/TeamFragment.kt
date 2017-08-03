@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import me.ealanhill.wtfitnesschallenge.R
 import me.ealanhill.wtfitnesschallenge.databinding.FragmentTeamBinding
+import me.ealanhill.wtfitnesschallenge.team.actions.LoadTeamMembersAction
 
 class TeamFragment: LifecycleFragment() {
 
@@ -31,6 +32,10 @@ class TeamFragment: LifecycleFragment() {
                     teamMembers.layoutManager = teamLinearLayoutManager
                     teamSuperlatives.layoutManager = superlativesLinearLayoutManager
                 }
+
+        if (savedInstanceState == null) {
+            store.dispatch(LoadTeamMembersAction)
+        }
 
         return binding.root
         /*

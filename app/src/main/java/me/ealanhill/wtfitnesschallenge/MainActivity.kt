@@ -17,20 +17,17 @@ import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import me.ealanhill.wtfitnesschallenge.calendar.action.LoadActionCreator
+import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityMainBinding
-import me.ealanhill.wtfitnesschallenge.di.AppComponent
-import me.ealanhill.wtfitnesschallenge.di.DaggerAppComponent
-import me.ealanhill.wtfitnesschallenge.di.LoadActionCreatorModule
-import me.ealanhill.wtfitnesschallenge.di.UserModule
+import me.ealanhill.wtfitnesschallenge.di.*
+import me.ealanhill.wtfitnesschallenge.team.actions.TeamActionCreator
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
-    private lateinit var loadActionCreator: LoadActionCreator
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
     private val SIGN_IN = 1
@@ -48,9 +45,10 @@ class MainActivity : AppCompatActivity() {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
-                loadActionCreator = LoadActionCreator(user)
+                val calendarActionCreator = CalendarActionCreator(user)
                 loadActionCreatorComponent = DaggerAppComponent.builder()
-                        .loadActionCreatorModule(LoadActionCreatorModule(loadActionCreator))
+                        .calendarActionCreatorModule(CalendarActionCreatorModule(calendarActionCreator))
+                        .teamActionCreatorModule(TeamActionCreatorModule(TeamActionCreator(user)))
                         .userModule(UserModule(user))
                         .build()
 

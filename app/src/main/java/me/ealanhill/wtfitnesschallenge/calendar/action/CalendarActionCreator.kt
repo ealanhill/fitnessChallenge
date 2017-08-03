@@ -14,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoadActionCreator @Inject constructor(private val user: FirebaseUser) {
+class CalendarActionCreator @Inject constructor(private val user: FirebaseUser) {
 
     private val tag = "LoadActionCreator"
 
