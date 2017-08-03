@@ -43,7 +43,6 @@ class CalendarActionCreator @Inject constructor(private val user: FirebaseUser) 
                         }
 
                         override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                            // TODO: this gets called when the app is loaded
                             Log.i(tag, "onChildAdded")
                             updateCalendar(dataSnapshot)
                         }
@@ -66,7 +65,6 @@ class CalendarActionCreator @Inject constructor(private val user: FirebaseUser) 
     fun getEntryForm(year: Int, month: String, day: Int): Thunk<Action, Action> {
         return Thunk { dispatcher ->
             val database = FirebaseDatabase.getInstance().reference
-            val items = ArrayList<EntryFormModel>(0)
             database.child(DatabaseTables.POINT_ENTRY_FORM).addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError?) {
                     databaseError?.let {
@@ -75,6 +73,7 @@ class CalendarActionCreator @Inject constructor(private val user: FirebaseUser) 
                 }
 
                 override fun onDataChange(databaseSnapshot: DataSnapshot?) {
+                    val items = ArrayList<EntryFormModel>(0)
                     databaseSnapshot?.children?.forEach { child: DataSnapshot? ->
                         items.add(child?.getValue(EntryFormModel::class.java)!!)
                     }

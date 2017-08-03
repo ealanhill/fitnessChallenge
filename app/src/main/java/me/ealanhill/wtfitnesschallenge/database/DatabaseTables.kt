@@ -5,4 +5,5 @@ object DatabaseTables {
     val USERS = "users"
     val TEAMS = "teams"
     val POINT_ENTRY_FORM = "pointEntryForm"
+    val MEMBERS = "members"
 }

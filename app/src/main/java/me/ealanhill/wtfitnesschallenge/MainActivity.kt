@@ -21,6 +21,7 @@ import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityMainBinding
 import me.ealanhill.wtfitnesschallenge.di.*
+import me.ealanhill.wtfitnesschallenge.team.TeamFragment
 import me.ealanhill.wtfitnesschallenge.team.actions.TeamActionCreator
 
 class MainActivity : AppCompatActivity() {
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     private fun selectDrawerItem(item: MenuItem, drawer: DrawerLayout) {
         when (item.itemId) {
             R.id.calendar -> swapFragments(CalendarFragment.newInstance())
-            R.id.team -> null
+            R.id.team -> swapFragments(TeamFragment.newInstance())
             R.id.standings -> null
             R.id.logout -> signOutUser()
         }
