@@ -17,10 +17,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -75,7 +78,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
                 store = calendarViewModel.store
                 store.dispatch(UserAction(user))
 
-                initializeAfterSignIn(savedInstanceState)
+                initializeAfterSignIn(savedInstanceState, user)
             } else {
                 startActivityForResult(
                         AuthUI.getInstance()
@@ -90,7 +93,7 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
         }
     }
 
-    private fun initializeAfterSignIn(savedInstanceState: Bundle?) {
+    private fun initializeAfterSignIn(savedInstanceState: Bundle?, user: FirebaseUser) {
         linearLayoutManager = LinearLayoutManager(this)
 
         binding = DataBindingUtil.setContentView<ActivityCalendarBinding>(this, R.layout.activity_calendar)
@@ -107,6 +110,9 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
                         drawerToggle.syncState()
                     }
                     drawer.addDrawerListener(drawerToggle)
+                    val headerLayout = navigationView.inflateHeaderView(R.layout.nav_header)
+                    (headerLayout.findViewById(R.id.user_name) as TextView).text = user.displayName
+
                 }
 
         if (savedInstanceState == null) {
