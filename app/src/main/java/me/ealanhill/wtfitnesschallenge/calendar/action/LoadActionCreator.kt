@@ -1,8 +1,9 @@
-package me.ealanhill.wtfitnesschallenge.action
+package me.ealanhill.wtfitnesschallenge.calendar.action
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import me.ealanhill.wtfitnesschallenge.Action
 import me.ealanhill.wtfitnesschallenge.calendar.DateItem
 import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
 import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.EntryFormModel

@@ -1,6 +1,6 @@
 package me.ealanhill.wtfitnesschallenge.team
 
-import me.ealanhill.wtfitnesschallenge.action.Action
+import me.ealanhill.wtfitnesschallenge.Action
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
 

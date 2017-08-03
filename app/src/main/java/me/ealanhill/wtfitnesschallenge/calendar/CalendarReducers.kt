@@ -1,10 +1,10 @@
 package me.ealanhill.wtfitnesschallenge.calendar
 
 import com.google.firebase.database.*
-import me.ealanhill.wtfitnesschallenge.action.Action
-import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
-import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
-import me.ealanhill.wtfitnesschallenge.action.UserAction
+import me.ealanhill.wtfitnesschallenge.Action
+import me.ealanhill.wtfitnesschallenge.calendar.action.InitializeCalendarAction
+import me.ealanhill.wtfitnesschallenge.calendar.action.UpdateCalendarPointsAction
+import me.ealanhill.wtfitnesschallenge.calendar.action.UserAction
 import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers

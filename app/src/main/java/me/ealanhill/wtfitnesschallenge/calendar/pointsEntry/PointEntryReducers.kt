@@ -3,9 +3,9 @@ package me.ealanhill.wtfitnesschallenge.calendar.pointsEntry
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import me.ealanhill.wtfitnesschallenge.MainActivity
-import me.ealanhill.wtfitnesschallenge.action.Action
-import me.ealanhill.wtfitnesschallenge.action.GetEntryFormItemsAction
-import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
+import me.ealanhill.wtfitnesschallenge.Action
+import me.ealanhill.wtfitnesschallenge.calendar.action.GetEntryFormItemsAction
+import me.ealanhill.wtfitnesschallenge.calendar.action.UploadPointsAction
 import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers

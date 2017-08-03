@@ -1,4 +1,6 @@
-package me.ealanhill.wtfitnesschallenge.action
+package me.ealanhill.wtfitnesschallenge.calendar.action
+
+import me.ealanhill.wtfitnesschallenge.Action
 
 object UpdatePointsAction: Action {
 

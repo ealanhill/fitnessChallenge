@@ -1,7 +1,7 @@
 package me.ealanhill.wtfitnesschallenge
 
 import junit.framework.Assert.assertTrue
-import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
+import me.ealanhill.wtfitnesschallenge.calendar.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarReducers
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarState
 import me.ealanhill.wtfitnesschallenge.calendar.DateItem

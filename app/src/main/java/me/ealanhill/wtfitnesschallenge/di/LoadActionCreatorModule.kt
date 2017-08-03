@@ -2,7 +2,7 @@ package me.ealanhill.wtfitnesschallenge.di
 
 import dagger.Module
 import dagger.Provides
-import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
+import me.ealanhill.wtfitnesschallenge.calendar.action.LoadActionCreator
 import javax.inject.Singleton
 
 @Module

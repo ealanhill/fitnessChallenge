@@ -17,7 +17,7 @@ import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
+import me.ealanhill.wtfitnesschallenge.calendar.action.LoadActionCreator
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityMainBinding
 import me.ealanhill.wtfitnesschallenge.di.AppComponent

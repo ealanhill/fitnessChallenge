@@ -14,9 +14,9 @@ import me.ealanhill.wtfitnesschallenge.MainActivity
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarViewModel
 import me.ealanhill.wtfitnesschallenge.calendar.DateItem
 import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
-import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
-import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
+import me.ealanhill.wtfitnesschallenge.calendar.action.LoadActionCreator
+import me.ealanhill.wtfitnesschallenge.calendar.action.UpdateCalendarPointsAction
+import me.ealanhill.wtfitnesschallenge.calendar.action.UploadPointsAction
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarStore
 import java.util.*

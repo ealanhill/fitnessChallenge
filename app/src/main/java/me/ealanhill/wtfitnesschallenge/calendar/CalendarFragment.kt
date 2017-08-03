@@ -11,9 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseUser
 import me.ealanhill.wtfitnesschallenge.*
-import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
-import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
-import me.ealanhill.wtfitnesschallenge.action.UserAction
+import me.ealanhill.wtfitnesschallenge.calendar.action.InitializeCalendarAction
+import me.ealanhill.wtfitnesschallenge.calendar.action.LoadActionCreator
+import me.ealanhill.wtfitnesschallenge.calendar.action.UserAction
 import me.ealanhill.wtfitnesschallenge.databinding.FragmentCalendarBinding
 import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.PointsDialogFragment
 import javax.inject.Inject
