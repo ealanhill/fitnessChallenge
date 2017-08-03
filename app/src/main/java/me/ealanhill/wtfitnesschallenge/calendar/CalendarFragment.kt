@@ -1,7 +1,6 @@
 package me.ealanhill.wtfitnesschallenge.calendar
 
 import android.arch.lifecycle.LifecycleFragment
-import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -16,33 +15,28 @@ import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
 import me.ealanhill.wtfitnesschallenge.action.UserAction
 import me.ealanhill.wtfitnesschallenge.databinding.FragmentCalendarBinding
-import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
-import me.ealanhill.wtfitnesschallenge.state.CalendarState
-import me.ealanhill.wtfitnesschallenge.store.MainStore
+import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.PointsDialogFragment
 import javax.inject.Inject
 
 class CalendarFragment: LifecycleFragment(), CalendarAdapter.CalendarOnClickListener {
 
+    private val DIALOG_FRAGMENT = 1
+
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var calendarViewModel: CalendarViewModel
-    private lateinit var store: MainStore
+    private lateinit var store: CalendarStore
 
     @Inject
     lateinit var loadActionCreator: LoadActionCreator
     @Inject
     lateinit var user: FirebaseUser
 
-    private val registry = LifecycleRegistry(this)
-    private val DIALOG_FRAGMENT = 1
-
     companion object {
         fun newInstance(): CalendarFragment {
             return CalendarFragment()
         }
     }
-
-    override fun getLifecycle(): LifecycleRegistry = registry
 
     override fun onCreateView(inflater: LayoutInflater?,
                               container: ViewGroup?,

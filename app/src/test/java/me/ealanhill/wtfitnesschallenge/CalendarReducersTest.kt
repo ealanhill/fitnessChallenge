@@ -2,8 +2,9 @@ package me.ealanhill.wtfitnesschallenge
 
 import junit.framework.Assert.assertTrue
 import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
-import me.ealanhill.wtfitnesschallenge.reducers.CalendarReducers
-import me.ealanhill.wtfitnesschallenge.state.CalendarState
+import me.ealanhill.wtfitnesschallenge.calendar.CalendarReducers
+import me.ealanhill.wtfitnesschallenge.calendar.CalendarState
+import me.ealanhill.wtfitnesschallenge.calendar.DateItem
 import org.junit.Test
 import java.util.*
 

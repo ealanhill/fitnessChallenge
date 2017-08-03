@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import me.ealanhill.wtfitnesschallenge.AutoUpdatableAdapter
-import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.R
 
 class CalendarAdapter(val onClickListener: CalendarOnClickListener) : Adapter<CalendarItemViewHolder>(), AutoUpdatableAdapter {
@@ -23,7 +22,7 @@ class CalendarAdapter(val onClickListener: CalendarOnClickListener) : Adapter<Ca
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarItemViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.date_item, parent, false)
+                .inflate(R.layout.item_text_and_number, parent, false)
         return CalendarItemViewHolder(view as LinearLayout)
     }
 

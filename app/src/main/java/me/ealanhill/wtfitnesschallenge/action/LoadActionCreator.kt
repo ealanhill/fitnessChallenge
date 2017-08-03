@@ -3,9 +3,9 @@ package me.ealanhill.wtfitnesschallenge.action
 import android.util.Log
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import me.ealanhill.wtfitnesschallenge.DateItem
+import me.ealanhill.wtfitnesschallenge.calendar.DateItem
 import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
-import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
+import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.EntryFormModel
 import me.tatarka.redux.Dispatcher
 import me.tatarka.redux.Thunk
 import java.util.*

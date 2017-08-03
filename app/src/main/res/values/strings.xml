@@ -17,4 +17,9 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="superlatives">Superlatives</string>
+    <string name="snackmeister">Snackmeister</string>
+    <string name="meathead">Meathead</string>
+    <string name="teamAverage">Team Average</string>
 </resources>

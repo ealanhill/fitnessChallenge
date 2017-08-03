@@ -1,6 +1,6 @@
 package me.ealanhill.wtfitnesschallenge.action
 
-import me.ealanhill.wtfitnesschallenge.DateItem
+import me.ealanhill.wtfitnesschallenge.calendar.DateItem
 
 object UpdateCalendarPointsAction: Action {
     private lateinit var dateItem: DateItem

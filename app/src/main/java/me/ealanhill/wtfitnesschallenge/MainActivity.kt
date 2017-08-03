@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
     private fun signOutUser() {
         AuthUI.getInstance()
                 .signOut(this)
-                .addOnCompleteListener { task ->
+                .addOnCompleteListener { _ ->
                     startActivity(getSignInActivity())
                 }
     }
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        authStateListener?.apply {
+        authStateListener.apply {
             firebaseAuth.removeAuthStateListener(authStateListener)
         }
     }

@@ -1,6 +1,6 @@
 package me.ealanhill.wtfitnesschallenge.action
 
-import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
+import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.EntryFormModel
 import java.util.*
 
 object GetEntryFormItemsAction: Action {
