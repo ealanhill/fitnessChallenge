@@ -36,6 +36,18 @@ class TeamActionCreator @Inject constructor(private val user: FirebaseUser) {
     private fun getTeamMembers(dispatcher: Dispatcher<Action, Action>, team: String) {
         val database = FirebaseDatabase.getInstance().getReference(DatabaseTables.TEAMS)
         database.child(team)
+                .child(DatabaseTables.NAME)
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.e(TAG, databaseError.message, databaseError.toException())
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dispatcher.dispatch(UpdateTeamNameAction.create(dataSnapshot.value as String))
+                    }
+
+                })
+        database.child(team)
                 .child(DatabaseTables.MEMBERS)
                 .addChildEventListener(object: ChildEventListener {
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -64,13 +76,14 @@ class TeamActionCreator @Inject constructor(private val user: FirebaseUser) {
     private fun getTeamMember(dispatcher: Dispatcher<Action, Action>, teamMember: String) {
         val database = FirebaseDatabase.getInstance().getReference(DatabaseTables.USERS)
         database.child(teamMember)
+                .child(DatabaseTables.NAME)
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.e(TAG, databaseError.message, databaseError.toException())
                     }
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        dispatcher.dispatch(AddTeamMemberAction.create(dataSnapshot.child("name").value as String, 0))
+                        dispatcher.dispatch(AddTeamMemberAction.create(dataSnapshot.value as String, 0))
                     }
 
                 })

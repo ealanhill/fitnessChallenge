@@ -55,6 +55,9 @@ class TeamFragment: LifecycleFragment() {
         teamViewModel.state.observe(this, Observer<TeamState> { data ->
             data?.let {
                 (binding.teamMembers.adapter as TeamAdapter).setTeamMembers(data.teamMembers)
+                if (binding.teamName.text != data.teamName) {
+                    binding.teamName.text = data.teamName
+                }
             }
         })
 
