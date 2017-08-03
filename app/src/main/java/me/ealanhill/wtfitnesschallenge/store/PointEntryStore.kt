@@ -1,6 +1,5 @@
 package me.ealanhill.wtfitnesschallenge.store
 
-import me.ealanhill.wtfitnesschallenge.CalendarActivity
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.reducers.PointEntryReducers
 import me.ealanhill.wtfitnesschallenge.state.PointEntryState

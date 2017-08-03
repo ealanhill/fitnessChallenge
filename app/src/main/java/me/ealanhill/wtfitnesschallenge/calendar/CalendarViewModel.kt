@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge
+package me.ealanhill.wtfitnesschallenge.calendar
 
 import android.app.Application
 import me.ealanhill.wtfitnesschallenge.state.CalendarState

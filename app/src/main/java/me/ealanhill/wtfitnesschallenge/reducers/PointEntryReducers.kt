@@ -2,7 +2,7 @@ package me.ealanhill.wtfitnesschallenge.reducers
 
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
-import me.ealanhill.wtfitnesschallenge.CalendarActivity
+import me.ealanhill.wtfitnesschallenge.MainActivity
 import me.ealanhill.wtfitnesschallenge.action.Action
 import me.ealanhill.wtfitnesschallenge.action.GetEntryFormItemsAction
 import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class PointEntryReducers {
 
     init {
-        CalendarActivity.loadActionCreatorComponent.inject(this)
+        MainActivity.loadActionCreatorComponent.inject(this)
     }
 
     @Inject

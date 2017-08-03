@@ -11,8 +11,8 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import me.ealanhill.wtfitnesschallenge.CalendarActivity
-import me.ealanhill.wtfitnesschallenge.CalendarViewModel
+import me.ealanhill.wtfitnesschallenge.MainActivity
+import me.ealanhill.wtfitnesschallenge.calendar.CalendarViewModel
 import me.ealanhill.wtfitnesschallenge.DateItem
 import me.ealanhill.wtfitnesschallenge.R
 import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
@@ -55,7 +55,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CalendarActivity.loadActionCreatorComponent.inject(this)
+        MainActivity.loadActionCreatorComponent.inject(this)
         mainStore = ViewModelProviders.of(activity as AppCompatActivity)
                 .get(CalendarViewModel::class.java)
                 .store

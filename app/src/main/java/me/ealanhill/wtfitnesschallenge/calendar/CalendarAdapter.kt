@@ -1,9 +1,12 @@
-package me.ealanhill.wtfitnesschallenge
+package me.ealanhill.wtfitnesschallenge.calendar
 
 import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import me.ealanhill.wtfitnesschallenge.AutoUpdatableAdapter
+import me.ealanhill.wtfitnesschallenge.DateItem
+import me.ealanhill.wtfitnesschallenge.R
 
 class CalendarAdapter(val onClickListener: CalendarOnClickListener) : Adapter<CalendarItemViewHolder>(), AutoUpdatableAdapter {
 

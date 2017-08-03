@@ -1,64 +1,44 @@
 package me.ealanhill.wtfitnesschallenge
 
 import android.app.Activity
-import android.arch.lifecycle.LifecycleRegistry
-import android.arch.lifecycle.LifecycleRegistryOwner
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.LifecycleFragment
 import android.content.Intent
 import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBar
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import me.ealanhill.wtfitnesschallenge.action.InitializeCalendarAction
 import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
-import me.ealanhill.wtfitnesschallenge.action.UserAction
-import me.ealanhill.wtfitnesschallenge.databinding.ActivityCalendarBinding
-import me.ealanhill.wtfitnesschallenge.di.*
-import me.ealanhill.wtfitnesschallenge.pointsEntry.PointsDialogFragment
-import me.ealanhill.wtfitnesschallenge.state.CalendarState
-import me.ealanhill.wtfitnesschallenge.store.MainStore
-import java.util.*
-import javax.inject.Inject
+import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
+import me.ealanhill.wtfitnesschallenge.databinding.ActivityMainBinding
+import me.ealanhill.wtfitnesschallenge.di.AppComponent
+import me.ealanhill.wtfitnesschallenge.di.DaggerAppComponent
+import me.ealanhill.wtfitnesschallenge.di.LoadActionCreatorModule
+import me.ealanhill.wtfitnesschallenge.di.UserModule
 
-class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAdapter.CalendarOnClickListener {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityCalendarBinding
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var store: MainStore
+    private lateinit var binding: ActivityMainBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var loadActionCreator: LoadActionCreator
-    private lateinit var calendarViewModel: CalendarViewModel
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
-    private val registry = LifecycleRegistry(this)
     private val SIGN_IN = 1
     private val TAG = "CalendarAcivity"
 
     companion object {
-        lateinit var loadActionCreatorComponent: LoadActionCreatorComponent
+        lateinit var loadActionCreatorComponent: AppComponent
     }
-
-    override fun getLifecycle(): LifecycleRegistry = registry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,16 +49,12 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
             val user = firebaseAuth.currentUser
             if (user != null) {
                 loadActionCreator = LoadActionCreator(user)
-                loadActionCreatorComponent = DaggerLoadActionCreatorComponent.builder()
+                loadActionCreatorComponent = DaggerAppComponent.builder()
                         .loadActionCreatorModule(LoadActionCreatorModule(loadActionCreator))
                         .userModule(UserModule(user))
                         .build()
 
-                calendarViewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
-                store = calendarViewModel.store
-                store.dispatch(UserAction(user))
-
-                initializeAfterSignIn(savedInstanceState, user)
+                initializeAfterSignIn(user)
             } else {
                 startActivityForResult(
                         AuthUI.getInstance()
@@ -93,40 +69,45 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
         }
     }
 
-    private fun initializeAfterSignIn(savedInstanceState: Bundle?, user: FirebaseUser) {
-        linearLayoutManager = LinearLayoutManager(this)
-
-        binding = DataBindingUtil.setContentView<ActivityCalendarBinding>(this, R.layout.activity_calendar)
+    private fun initializeAfterSignIn(user: FirebaseUser) {
+        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
                 .apply {
-                    calendarRecyclerView.setHasFixedSize(true)
-                    calendarRecyclerView.layoutManager = linearLayoutManager
-                    calendarRecyclerView.adapter = CalendarAdapter(this@CalendarActivity)
                     setSupportActionBar(toolbar)
                     if (supportActionBar != null) {
                         (supportActionBar as ActionBar).setDisplayHomeAsUpEnabled(true)
-                        drawerToggle = ActionBarDrawerToggle(this@CalendarActivity,
+                        drawerToggle = ActionBarDrawerToggle(this@MainActivity,
                                 drawer, toolbar, R.string.drawer_open, R.string.drawer_close)
                         drawerToggle.isDrawerIndicatorEnabled = true
                         drawerToggle.syncState()
+                        navigationView.setNavigationItemSelectedListener { item ->
+                            selectDrawerItem(item, drawer)
+                            true
+                        }
+                        navigationView.setCheckedItem(R.id.calendar)
+                        swapFragments(CalendarFragment.newInstance())
                     }
                     drawer.addDrawerListener(drawerToggle)
                     val headerLayout = navigationView.inflateHeaderView(R.layout.nav_header)
                     (headerLayout.findViewById(R.id.user_name) as TextView).text = user.displayName
-
                 }
+    }
 
-        if (savedInstanceState == null) {
-            store.dispatch(InitializeCalendarAction)
+    private fun selectDrawerItem(item: MenuItem, drawer: DrawerLayout) {
+        when (item.itemId) {
+            R.id.calendar -> swapFragments(CalendarFragment.newInstance())
+            R.id.team -> null
+            R.id.standings -> null
+            R.id.logout -> null
         }
 
-        store.dispatch(loadActionCreator.initializeMonth())
+        item.isChecked = true
+        drawer.closeDrawers()
+    }
 
-        calendarViewModel.state.observe(this, Observer<CalendarState> {
-            data ->
-            data?.let {
-                (binding.calendarRecyclerView.adapter as CalendarAdapter).setState(data.dateItems)
-            }
-        })
+    private fun swapFragments(fragment: LifecycleFragment) {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.content, fragment)
+                .commit()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -141,11 +122,6 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
         }
     }
 
-    override fun onClick(dateItem: DateItem) {
-        PointsDialogFragment.newInstance(dateItem.date)
-                .show(supportFragmentManager, "dialog")
-    }
-
     override fun onPause() {
         super.onPause()
         authStateListener?.apply {
@@ -156,14 +132,6 @@ class CalendarActivity : AppCompatActivity(), LifecycleRegistryOwner, CalendarAd
     override fun onResume() {
         super.onResume()
         firebaseAuth.addAuthStateListener(authStateListener)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
