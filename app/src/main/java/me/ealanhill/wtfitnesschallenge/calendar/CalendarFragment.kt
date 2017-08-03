@@ -34,6 +34,7 @@ class CalendarFragment: LifecycleFragment(), CalendarAdapter.CalendarOnClickList
     lateinit var user: FirebaseUser
 
     private val registry = LifecycleRegistry(this)
+    private val DIALOG_FRAGMENT = 1
 
     companion object {
         fun newInstance(): CalendarFragment {
@@ -78,7 +79,8 @@ class CalendarFragment: LifecycleFragment(), CalendarAdapter.CalendarOnClickList
     }
 
     override fun onClick(dateItem: DateItem) {
-        PointsDialogFragment.newInstance(dateItem.date)
-                .show(fragmentManager, "dialog")
+        val dialogFragment = PointsDialogFragment.newInstance(dateItem.date)
+        dialogFragment.setTargetFragment(this, DIALOG_FRAGMENT)
+        dialogFragment.show(fragmentManager, "dialog")
     }
 }

@@ -56,17 +56,18 @@ class MainActivity : AppCompatActivity() {
 
                 initializeAfterSignIn(user)
             } else {
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setIsSmartLockEnabled(false)
-                                .setAvailableProviders(mutableListOf(
-                                        AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
-                                )).build(),
-                        SIGN_IN
-                )
+                startActivityForResult(getSignInActivity(), SIGN_IN)
             }
         }
+    }
+
+    private fun getSignInActivity(): Intent {
+        return AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setIsSmartLockEnabled(false)
+                .setAvailableProviders(mutableListOf(
+                        AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
+                )).build()
     }
 
     private fun initializeAfterSignIn(user: FirebaseUser) {
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             R.id.calendar -> swapFragments(CalendarFragment.newInstance())
             R.id.team -> null
             R.id.standings -> null
-            R.id.logout -> null
+            R.id.logout -> signOutUser()
         }
 
         item.isChecked = true
@@ -108,6 +109,14 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.content, fragment)
                 .commit()
+    }
+
+    private fun signOutUser() {
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener { task ->
+                    startActivity(getSignInActivity())
+                }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

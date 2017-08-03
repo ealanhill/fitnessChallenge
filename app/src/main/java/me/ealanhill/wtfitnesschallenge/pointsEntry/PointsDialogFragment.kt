@@ -18,6 +18,7 @@ import me.ealanhill.wtfitnesschallenge.R
 import me.ealanhill.wtfitnesschallenge.action.LoadActionCreator
 import me.ealanhill.wtfitnesschallenge.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.action.UploadPointsAction
+import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
 import me.ealanhill.wtfitnesschallenge.model.EntryFormModel
 import me.ealanhill.wtfitnesschallenge.state.PointEntryState
@@ -56,7 +57,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MainActivity.loadActionCreatorComponent.inject(this)
-        mainStore = ViewModelProviders.of(activity as AppCompatActivity)
+        mainStore = ViewModelProviders.of(targetFragment)
                 .get(CalendarViewModel::class.java)
                 .store
         pointEntryViewModel = ViewModelProviders.of(this).get(PointEntryViewModel::class.java)
