@@ -7,4 +7,5 @@ object DatabaseTables {
     val POINT_ENTRY_FORM = "pointEntryForm"
     val MEMBERS = "members"
     val NAME = "name"
+    val SUPERLATIVES = "superlatives"
 }

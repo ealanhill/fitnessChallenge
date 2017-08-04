@@ -11,6 +11,7 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(
         CalendarActionCreatorModule::class,
         TeamActionCreatorModule::class,
+        SuperlativeActionCreatorModule::class,
         UserModule::class
 ))
 interface AppComponent {

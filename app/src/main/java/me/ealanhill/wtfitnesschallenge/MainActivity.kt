@@ -22,6 +22,7 @@ import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityMainBinding
 import me.ealanhill.wtfitnesschallenge.di.*
 import me.ealanhill.wtfitnesschallenge.team.TeamFragment
+import me.ealanhill.wtfitnesschallenge.team.actions.SuperlativeActionCreator
 import me.ealanhill.wtfitnesschallenge.team.actions.TeamActionCreator
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                 loadActionCreatorComponent = DaggerAppComponent.builder()
                         .calendarActionCreatorModule(CalendarActionCreatorModule(calendarActionCreator))
                         .teamActionCreatorModule(TeamActionCreatorModule(TeamActionCreator(user)))
+                        .superlativeActionCreatorModule(SuperlativeActionCreatorModule(SuperlativeActionCreator(user)))
                         .userModule(UserModule(user))
                         .build()
 

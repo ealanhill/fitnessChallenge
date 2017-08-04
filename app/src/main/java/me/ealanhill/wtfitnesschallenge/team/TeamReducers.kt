@@ -1,9 +1,7 @@
 package me.ealanhill.wtfitnesschallenge.team
 
 import me.ealanhill.wtfitnesschallenge.Action
-import me.ealanhill.wtfitnesschallenge.team.actions.AddTeamMemberAction
-import me.ealanhill.wtfitnesschallenge.team.actions.UpdateTeamNameAction
-import me.ealanhill.wtfitnesschallenge.team.actions.UpdateUserMonthTotalAction
+import me.ealanhill.wtfitnesschallenge.team.actions.*
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
 
@@ -13,6 +11,7 @@ object TeamReducers {
                 .`when`(AddTeamMemberAction::class.java, addTeamMember())
                 .`when`(UpdateTeamNameAction::class.java, updateTeamName())
                 .`when`(UpdateUserMonthTotalAction::class.java, updateTeamMemberTotal())
+                .`when`(SuperlativeAction::class.java, updateSuperlatives())
     }
 
     fun addTeamMember(): Reducer<AddTeamMemberAction, TeamState> {
@@ -39,6 +38,24 @@ object TeamReducers {
                 }
             }
             state.copy(teamMembers = teamMembers)
+        }
+    }
+
+    fun updateSuperlatives(): Reducer<SuperlativeAction, TeamState> {
+        return Reducer { (title, value), state ->
+            val superlatives = HashMap<String, String>(0)
+            state.superlatives.forEach { (title, value): SuperlativeModel ->
+                superlatives.put(title, value)
+            }
+
+            superlatives.put(title, value)
+
+            val superlativeList = ArrayList<SuperlativeModel>(0)
+            superlatives.forEach { title, value ->
+                superlativeList.add(SuperlativeModel(title, value))
+            }
+
+            state.copy(superlatives = superlativeList)
         }
     }
 
