@@ -5,8 +5,10 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import me.ealanhill.wtfitnesschallenge.Action
 import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
+import me.ealanhill.wtfitnesschallenge.team.TeamMemberModel
 import me.tatarka.redux.Dispatcher
 import me.tatarka.redux.Thunk
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,6 +20,7 @@ class TeamActionCreator @Inject constructor(private val user: FirebaseUser) {
     fun getTeammates(): Thunk<Action, Action> {
         return Thunk { dispatcher ->
             val database = FirebaseDatabase.getInstance().getReference(DatabaseTables.USERS)
+            // retrieve the users team
             database.child(user.uid)
                     .child("team")
                     .addListenerForSingleValueEvent(object: ValueEventListener {
@@ -35,6 +38,7 @@ class TeamActionCreator @Inject constructor(private val user: FirebaseUser) {
 
     private fun getTeamMembers(dispatcher: Dispatcher<Action, Action>, team: String) {
         val database = FirebaseDatabase.getInstance().getReference(DatabaseTables.TEAMS)
+        // get the team name
         database.child(team)
                 .child(DatabaseTables.NAME)
                 .addListenerForSingleValueEvent(object: ValueEventListener {
@@ -47,6 +51,7 @@ class TeamActionCreator @Inject constructor(private val user: FirebaseUser) {
                     }
 
                 })
+        // get each team member
         database.child(team)
                 .child(DatabaseTables.MEMBERS)
                 .addChildEventListener(object: ChildEventListener {
@@ -73,9 +78,10 @@ class TeamActionCreator @Inject constructor(private val user: FirebaseUser) {
                 })
     }
 
-    private fun getTeamMember(dispatcher: Dispatcher<Action, Action>, teamMember: String) {
+    private fun getTeamMember(dispatcher: Dispatcher<Action, Action>, teamMemberId: String) {
         val database = FirebaseDatabase.getInstance().getReference(DatabaseTables.USERS)
-        database.child(teamMember)
+        // get the names of all the team members
+        database.child(teamMemberId)
                 .child(DatabaseTables.NAME)
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -83,7 +89,32 @@ class TeamActionCreator @Inject constructor(private val user: FirebaseUser) {
                     }
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        dispatcher.dispatch(AddTeamMemberAction.create(dataSnapshot.value as String, 0))
+                        dispatcher.dispatch(AddTeamMemberAction(
+                                TeamMemberModel(teamMemberId,dataSnapshot.value as String, 0)))
+                        getTeamMembersTotals(dispatcher, teamMemberId)
+                    }
+
+                })
+    }
+
+    private fun getTeamMembersTotals(dispatcher: Dispatcher<Action, Action>, teamMemberId: String) {
+        // total the users points
+        val calendar = Calendar.getInstance()
+        FirebaseDatabase.getInstance()
+                .getReference(DatabaseTables.ENTRIES)
+                .child(teamMemberId)
+                .child(calendar.get(Calendar.YEAR).toString())
+                .child(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US))
+                .child("0") // the month total
+                .child("total")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.e(TAG, databaseError.message, databaseError.toException())
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dispatcher.dispatch(UpdateUserMonthTotalAction(teamMemberId,
+                                (dataSnapshot.value as Long).toInt()))
                     }
 
                 })

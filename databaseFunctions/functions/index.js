@@ -10,7 +10,7 @@ exports.updateUserInfo = functions.database.ref('/entries/{ID}/{year}/{month}/{d
    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
    var currentMonth = monthNames[today.getMonth()];
    var currentYear = today.getFullYear();
-   if (currentMonth != event.params.month, currentYear != event.params.year) {
+   if (currentMonth != event.params.month, currentYear != event.params.year, event.params.day == 0) {
      return;
    };
 
@@ -27,11 +27,23 @@ exports.updateUserInfo = functions.database.ref('/entries/{ID}/{year}/{month}/{d
    formItemsPromise.then(function(formItems) {
      var dayPath = '/entries/' + userId + '/' + currentYear + '/' + currentMonth + '/' + event.params.day;
      rootDatabase.ref(dayPath).once('value').then(function(daySnapshot) {
-       var total = 0
+       var dayTotal = 0;
        formItems.forEach(function(item) {
-         total += daySnapshot.child(item).val();
+         dayTotal += daySnapshot.child(item).val();
        });
-       rootDatabase.ref(dayPath).child('total').set(total);
+       rootDatabase.ref(dayPath).child('total').set(dayTotal);
+
+       var monthPath = '/entries/' + userId + '/' + currentYear + '/' + currentMonth;
+       rootDatabase.ref(monthPath).once('value').then(function(daysSnapshot) {
+         var monthTotal = 0;
+         daysSnapshot.forEach(function(day) {
+           if (day.key != 0) {
+             monthTotal += day.child('total').val();
+           }
+         });
+         rootDatabase.ref(monthPath).child(0).child('total').set(monthTotal);
+         console.log(monthTotal);
+       });
      });
    });
 });

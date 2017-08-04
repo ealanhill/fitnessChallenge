@@ -54,7 +54,9 @@ class CalendarActionCreator @Inject constructor(private val user: FirebaseUser) 
                         private fun updateCalendar(dataSnapshot: DataSnapshot) {
                             val map = dataSnapshot.getValue(object: GenericTypeIndicator<Map<@JvmSuppressWildcards String, @JvmSuppressWildcards Int>>() {})
                             map?.apply {
-                                dispatcher.dispatch(UpdateCalendarPointsAction.create(DateItem(year, month, dataSnapshot.key.toInt(), 0, map), map))
+                                if (dataSnapshot.key.toInt() != 0) {
+                                    dispatcher.dispatch(UpdateCalendarPointsAction.create(DateItem(year, month, dataSnapshot.key.toInt(), 0, map), map))
+                                }
                             }
                         }
 

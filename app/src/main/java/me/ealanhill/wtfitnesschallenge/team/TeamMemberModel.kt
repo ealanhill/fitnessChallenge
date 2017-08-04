@@ -1,6 +1,7 @@
 package me.ealanhill.wtfitnesschallenge.team
 
-data class TeamMemberModel(
+data class TeamMemberModel (
+        val uid: String,
         val name: String,
-        val points: Int
+        var points: Int
 )
