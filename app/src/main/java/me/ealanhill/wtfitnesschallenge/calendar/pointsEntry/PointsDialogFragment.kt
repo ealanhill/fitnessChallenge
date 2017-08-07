@@ -11,14 +11,14 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import me.ealanhill.wtfitnesschallenge.MainActivity
+import me.ealanhill.wtfitnesschallenge.R
+import me.ealanhill.wtfitnesschallenge.calendar.CalendarStore
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarViewModel
 import me.ealanhill.wtfitnesschallenge.calendar.DateItem
-import me.ealanhill.wtfitnesschallenge.R
 import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
 import me.ealanhill.wtfitnesschallenge.calendar.action.UpdateCalendarPointsAction
 import me.ealanhill.wtfitnesschallenge.calendar.action.UploadPointsAction
 import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
-import me.ealanhill.wtfitnesschallenge.calendar.CalendarStore
 import java.util.*
 import javax.inject.Inject
 
@@ -85,7 +85,7 @@ class PointsDialogFragment: DialogFragment(), LifecycleRegistryOwner {
         return AlertDialog.Builder(activity, theme)
                 .setTitle(getString(R.string.date_format, dateItem.month, dateItem.date))
                 .setView(view)
-                .setPositiveButton(android.R.string.ok, { dialog, which ->
+                .setPositiveButton(android.R.string.ok, { _, _ ->
                     val points: MutableMap<String, Int> = mutableMapOf()
                     models.map { entryFormItem ->
                         points.put(entryFormItem.name, entryFormItem.value)
