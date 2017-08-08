@@ -29,12 +29,12 @@ object TeamReducers {
     }
 
     fun updateTeamMemberTotal(): Reducer<UpdateUserMonthTotalAction, TeamState> {
-        return Reducer {action, state ->
+        return Reducer {(uid, points), state ->
             val teamMembers = ArrayList<TeamMemberModel>(0)
             copy(state.teamMembers, teamMembers)
             teamMembers.forEach { teamMemberModel: TeamMemberModel ->
-                if (teamMemberModel.uid == action.uid) {
-                    teamMemberModel.points = action.points
+                if (teamMemberModel.uid == uid) {
+                    teamMemberModel.points = points
                 }
             }
             state.copy(teamMembers = teamMembers)
@@ -51,8 +51,8 @@ object TeamReducers {
             superlatives.put(title, value)
 
             val superlativeList = ArrayList<SuperlativeModel>(0)
-            superlatives.forEach { title, value ->
-                superlativeList.add(SuperlativeModel(title, value))
+            superlatives.forEach { superlativeTitle, superlativeValue ->
+                superlativeList.add(SuperlativeModel(superlativeTitle, superlativeValue))
             }
 
             state.copy(superlatives = superlativeList)
@@ -60,9 +60,8 @@ object TeamReducers {
     }
 
     private fun copy(oldList: List<TeamMemberModel>, newList: MutableList<TeamMemberModel>) {
-        oldList.forEach { teamMemberModel: TeamMemberModel ->
-            newList.add(TeamMemberModel(teamMemberModel.uid, teamMemberModel.name,
-                    teamMemberModel.points))
+        oldList.forEach { (uid, name, points): TeamMemberModel ->
+            newList.add(TeamMemberModel(uid, name, points))
         }
     }
 }
