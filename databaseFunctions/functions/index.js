@@ -84,11 +84,10 @@ exports.updateTeamInfo = functions.database.ref('/entries/{ID}/{year}/{month}').
               rootDatabase.ref(path).once('value').then(function(personInfoSnapshot) {
                   var exercisePoints = 0;
                   var snacks = 0;
-                  var totalPoints = 0;
+                  var totalPoints = personInfoSnapshot.child('0').child('total').val();
                   personInfoSnapshot.forEach(function(entrySnapshot) {
                       exercisePoints += entrySnapshot.child('exercise').val();
                       snacks += entrySnapshot.child('snacks').val();
-                      totalPoints += entrySnapshot.child('total').val();
                     });
                   fulfill({personID:personID, exercise:exercisePoints, snacks:snacks, totalPoints:totalPoints});
                 });
