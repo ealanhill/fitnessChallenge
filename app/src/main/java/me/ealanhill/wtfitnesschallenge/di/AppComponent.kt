@@ -4,6 +4,7 @@ import dagger.Component
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
 import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.PointsDialogFragment
 import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.PointEntryReducers
+import me.ealanhill.wtfitnesschallenge.standings.StandingsFragment
 import me.ealanhill.wtfitnesschallenge.team.TeamFragment
 import javax.inject.Singleton
 
@@ -12,6 +13,7 @@ import javax.inject.Singleton
         CalendarActionCreatorModule::class,
         TeamActionCreatorModule::class,
         SuperlativeActionCreatorModule::class,
+        StandingsActionCreatorModule::class,
         UserModule::class
 ))
 interface AppComponent {
@@ -22,4 +24,6 @@ interface AppComponent {
     fun inject(calendarFragment: CalendarFragment)
 
     fun inject(teamFragment: TeamFragment)
+
+    fun inject(standingsFragment: StandingsFragment)
 }

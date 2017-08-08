@@ -21,6 +21,8 @@ import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
 import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
 import me.ealanhill.wtfitnesschallenge.databinding.ActivityMainBinding
 import me.ealanhill.wtfitnesschallenge.di.*
+import me.ealanhill.wtfitnesschallenge.standings.StandingsActionCreator
+import me.ealanhill.wtfitnesschallenge.standings.StandingsFragment
 import me.ealanhill.wtfitnesschallenge.team.TeamFragment
 import me.ealanhill.wtfitnesschallenge.team.actions.SuperlativeActionCreator
 import me.ealanhill.wtfitnesschallenge.team.actions.TeamActionCreator
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                         .calendarActionCreatorModule(CalendarActionCreatorModule(calendarActionCreator))
                         .teamActionCreatorModule(TeamActionCreatorModule(TeamActionCreator(user)))
                         .superlativeActionCreatorModule(SuperlativeActionCreatorModule(SuperlativeActionCreator(user)))
+                        .standingsActionCreatorModule(StandingsActionCreatorModule(StandingsActionCreator()))
                         .userModule(UserModule(user))
                         .build()
 
@@ -98,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.calendar -> swapFragments(CalendarFragment.newInstance())
             R.id.team -> swapFragments(TeamFragment.newInstance())
-            R.id.standings -> null
+            R.id.standings -> swapFragments(StandingsFragment.newInstance())
             R.id.logout -> signOutUser()
         }
 
