@@ -47,9 +47,9 @@ class CalendarReducersTest {
                 .dateItems
 
         val secondCalendar: Calendar = Calendar.getInstance()
-        val month: String = secondCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US)
+        val month: String = secondCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US)
 
-        assertTrue("Incorrect month, got " + daysInMonth[1].month + ", should be " + month, month.equals(daysInMonth[1].month))
+        assertTrue("Incorrect month, got " + daysInMonth[1].month + ", should be " + month, month == daysInMonth[1].month)
     }
 
     @Test
@@ -61,6 +61,7 @@ class CalendarReducersTest {
                 .reduce(InitializeCalendarAction, calendarState)
                 .dateItems
 
-        assertTrue("Incorrect month, got " + daysInMonth[1].month + ", should be Feb", "Feb".equals(daysInMonth[1].month))
+        assertTrue("Incorrect month, got " + daysInMonth[1].month + ", should be February",
+                "February" == daysInMonth[1].month)
     }
 }
