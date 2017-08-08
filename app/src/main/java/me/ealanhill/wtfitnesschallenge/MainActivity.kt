@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 .createSignInIntentBuilder()
                 .setIsSmartLockEnabled(false)
                 .setAvailableProviders(mutableListOf(
+                        AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
                         AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
                 )).build()
     }

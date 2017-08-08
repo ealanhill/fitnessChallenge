@@ -26,7 +26,9 @@ class SuperlativeActionCreator @Inject constructor(private val user: FirebaseUse
                         }
 
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            getUsersTeam(dispatcher, dataSnapshot.value as String)
+                            if (dataSnapshot.value != null) {
+                                getUsersTeam(dispatcher, dataSnapshot.value as String)
+                            }
                         }
 
                     })

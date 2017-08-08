@@ -38,7 +38,7 @@ object CalendarReducers {
     fun addNewUserReducer(): Reducer<UserAction, CalendarState> {
         return Reducer { (user), state ->
             val database = FirebaseDatabase.getInstance()
-                    .getReference(DatabaseTables.ENTRIES)
+                    .getReference(DatabaseTables.USERS)
 
             database.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {

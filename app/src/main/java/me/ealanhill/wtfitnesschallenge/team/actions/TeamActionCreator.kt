@@ -29,7 +29,9 @@ class TeamActionCreator @Inject constructor(private val user: FirebaseUser) {
                         }
 
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            getTeamMembers(dispatcher, dataSnapshot.value as String)
+                            if (dataSnapshot.value != null) {
+                                getTeamMembers(dispatcher, dataSnapshot.value as String)
+                            }
                         }
 
                     })
