@@ -32,9 +32,14 @@ class StandingsActionCreator {
         }
     }
 
-    fun getValue(dataSnapshot: DataSnapshot): Int =
-        if (dataSnapshot.child("averagePoints").value == null)
-            0
-        else
-            (dataSnapshot.child("averagePoints").value as Long).toInt()
+    fun getValue(dataSnapshot: DataSnapshot): Int {
+        val value = dataSnapshot.child("averagePoints").value
+        if (value == null)
+            return 0
+        else if (value is Long)
+            return value.toInt()
+        else if (value is Double)
+            return value.toInt()
+        return 0
+    }
 }
