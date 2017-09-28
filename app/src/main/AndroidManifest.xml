@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.ealanhill.wtfitnesschallenge">
+    package="me.ealanhill.fitnesschallenge">
 
     <application
         android:name=".FitnessChallengeApplication"

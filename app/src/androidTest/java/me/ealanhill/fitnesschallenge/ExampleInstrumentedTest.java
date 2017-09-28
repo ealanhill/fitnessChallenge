@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge;
+package me.ealanhill.fitnesschallenge;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
