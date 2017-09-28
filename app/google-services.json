@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "625595075911",
-    "firebase_url": "https://fitness-challenge-nerdery.firebaseio.com",
-    "project_id": "fitness-challenge-nerdery",
-    "storage_bucket": "fitness-challenge-nerdery.appspot.com"
+    "project_number": "1046713587094",
+    "firebase_url": "https://fitness-challenge-a4fa7.firebaseio.com",
+    "project_id": "fitness-challenge-a4fa7",
+    "storage_bucket": "fitness-challenge-a4fa7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:625595075911:android:b7c5104964a03a67",
+        "mobilesdk_app_id": "1:1046713587094:android:b6b057211834415e",
         "android_client_info": {
-          "package_name": "me.ealanhill.wtfitnesschallenge"
+          "package_name": "me.ealanhill.fitnesschallenge"
         }
       },
       "oauth_client": [
         {
-          "client_id": "625595075911-o6hnmr7o3beirhihf7u4mt81m1g5tb9d.apps.googleusercontent.com",
+          "client_id": "1046713587094-g9t8g8k90ltsdns4rn516pf48i55higm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCTErjcG3dilRNZVdG6ZqhH-jNozADiL3w"
+          "current_key": "AIzaSyDHoP0sweJ9ZmWvjfkXPCDo99aWsa0O7CM"
         }
       ],
       "services": {
