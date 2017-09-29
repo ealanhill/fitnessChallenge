@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.team
+package me.ealanhill.fitnesschallenge.team
 
 import android.app.Application
 import me.tatarka.redux.android.lifecycle.StoreAndroidViewModel

@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.team
+package me.ealanhill.fitnesschallenge.team
 
 import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.Observer
@@ -9,11 +9,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import me.ealanhill.wtfitnesschallenge.MainActivity
-import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.databinding.FragmentTeamBinding
-import me.ealanhill.wtfitnesschallenge.team.actions.SuperlativeActionCreator
-import me.ealanhill.wtfitnesschallenge.team.actions.TeamActionCreator
+import me.ealanhill.fitnesschallenge.MainActivity
+import me.ealanhill.fitnesschallenge.R
+import me.ealanhill.fitnesschallenge.databinding.FragmentTeamBinding
+import me.ealanhill.fitnesschallenge.team.actions.SuperlativeActionCreator
+import me.ealanhill.fitnesschallenge.team.actions.TeamActionCreator
 import javax.inject.Inject
 
 class TeamFragment: LifecycleFragment() {

@@ -1,9 +1,9 @@
-package me.ealanhill.wtfitnesschallenge.standings
+package me.ealanhill.fitnesschallenge.standings
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
-import me.ealanhill.wtfitnesschallenge.databinding.ItemTextAndNumberBinding
+import me.ealanhill.fitnesschallenge.databinding.ItemTextAndNumberBinding
 
 class StandingsViewHolder(itemView: LinearLayout): RecyclerView.ViewHolder(itemView) {
     var binding: ItemTextAndNumberBinding = DataBindingUtil.bind<ItemTextAndNumberBinding>(itemView)

@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.calendar.pointsEntry
+package me.ealanhill.fitnesschallenge.calendar.pointsEntry
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -10,15 +10,15 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import me.ealanhill.wtfitnesschallenge.MainActivity
-import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.calendar.CalendarStore
-import me.ealanhill.wtfitnesschallenge.calendar.CalendarViewModel
-import me.ealanhill.wtfitnesschallenge.calendar.DateItem
-import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
-import me.ealanhill.wtfitnesschallenge.calendar.action.UpdateCalendarPointsAction
-import me.ealanhill.wtfitnesschallenge.calendar.action.UploadPointsAction
-import me.ealanhill.wtfitnesschallenge.databinding.DialogPointsEntryBinding
+import me.ealanhill.fitnesschallenge.MainActivity
+import me.ealanhill.fitnesschallenge.R
+import me.ealanhill.fitnesschallenge.calendar.CalendarStore
+import me.ealanhill.fitnesschallenge.calendar.CalendarViewModel
+import me.ealanhill.fitnesschallenge.calendar.DateItem
+import me.ealanhill.fitnesschallenge.calendar.action.CalendarActionCreator
+import me.ealanhill.fitnesschallenge.calendar.action.UpdateCalendarPointsAction
+import me.ealanhill.fitnesschallenge.calendar.action.UploadPointsAction
+import me.ealanhill.fitnesschallenge.databinding.DialogPointsEntryBinding
 import java.util.*
 import javax.inject.Inject
 

@@ -1,11 +1,11 @@
-package me.ealanhill.wtfitnesschallenge.team
+package me.ealanhill.fitnesschallenge.team
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.team.actions.SuperlativeModel
+import me.ealanhill.fitnesschallenge.R
+import me.ealanhill.fitnesschallenge.team.actions.SuperlativeModel
 
 class SuperlativesAdapter: RecyclerView.Adapter<SuperlativesViewHolder>() {
     var superlatives: List<SuperlativeModel> = emptyList()

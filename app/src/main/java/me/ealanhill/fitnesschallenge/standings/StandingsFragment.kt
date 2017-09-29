@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.standings
+package me.ealanhill.fitnesschallenge.standings
 
 import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.Observer
@@ -9,9 +9,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import me.ealanhill.wtfitnesschallenge.MainActivity
-import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.databinding.FragmentStandingsBinding
+import me.ealanhill.fitnesschallenge.MainActivity
+import me.ealanhill.fitnesschallenge.R
+import me.ealanhill.fitnesschallenge.databinding.FragmentStandingsBinding
 import javax.inject.Inject
 
 class StandingsFragment: LifecycleFragment() {

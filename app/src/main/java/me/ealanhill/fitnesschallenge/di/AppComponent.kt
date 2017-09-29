@@ -1,11 +1,11 @@
-package me.ealanhill.wtfitnesschallenge.di
+package me.ealanhill.fitnesschallenge.di
 
 import dagger.Component
-import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
-import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.PointsDialogFragment
-import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.PointEntryReducers
-import me.ealanhill.wtfitnesschallenge.standings.StandingsFragment
-import me.ealanhill.wtfitnesschallenge.team.TeamFragment
+import me.ealanhill.fitnesschallenge.calendar.CalendarFragment
+import me.ealanhill.fitnesschallenge.calendar.pointsEntry.PointsDialogFragment
+import me.ealanhill.fitnesschallenge.calendar.pointsEntry.PointEntryReducers
+import me.ealanhill.fitnesschallenge.standings.StandingsFragment
+import me.ealanhill.fitnesschallenge.team.TeamFragment
 import javax.inject.Singleton
 
 @Singleton

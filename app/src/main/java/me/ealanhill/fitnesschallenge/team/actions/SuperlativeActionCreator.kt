@@ -1,10 +1,10 @@
-package me.ealanhill.wtfitnesschallenge.team.actions
+package me.ealanhill.fitnesschallenge.team.actions
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import me.ealanhill.wtfitnesschallenge.Action
-import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
+import me.ealanhill.fitnesschallenge.Action
+import me.ealanhill.fitnesschallenge.database.DatabaseTables
 import me.tatarka.redux.Dispatcher
 import me.tatarka.redux.Thunk
 import javax.inject.Inject

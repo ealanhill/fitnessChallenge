@@ -1,10 +1,10 @@
-package me.ealanhill.wtfitnesschallenge.standings
+package me.ealanhill.fitnesschallenge.standings
 
 import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import me.ealanhill.wtfitnesschallenge.R
+import me.ealanhill.fitnesschallenge.R
 
 class StandingsAdapter: Adapter<StandingsViewHolder>() {
     var teams: Map<String, Int> = emptyMap()

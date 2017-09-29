@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.standings
+package me.ealanhill.fitnesschallenge.standings
 
 import java.util.*
 

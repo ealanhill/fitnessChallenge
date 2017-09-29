@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge
+package me.ealanhill.fitnesschallenge
 
 import android.app.Activity
 import android.arch.lifecycle.LifecycleFragment
@@ -17,15 +17,15 @@ import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
-import me.ealanhill.wtfitnesschallenge.calendar.CalendarFragment
-import me.ealanhill.wtfitnesschallenge.databinding.ActivityMainBinding
-import me.ealanhill.wtfitnesschallenge.di.*
-import me.ealanhill.wtfitnesschallenge.standings.StandingsActionCreator
-import me.ealanhill.wtfitnesschallenge.standings.StandingsFragment
-import me.ealanhill.wtfitnesschallenge.team.TeamFragment
-import me.ealanhill.wtfitnesschallenge.team.actions.SuperlativeActionCreator
-import me.ealanhill.wtfitnesschallenge.team.actions.TeamActionCreator
+import me.ealanhill.fitnesschallenge.calendar.action.CalendarActionCreator
+import me.ealanhill.fitnesschallenge.calendar.CalendarFragment
+import me.ealanhill.fitnesschallenge.databinding.ActivityMainBinding
+import me.ealanhill.fitnesschallenge.di.*
+import me.ealanhill.fitnesschallenge.standings.StandingsActionCreator
+import me.ealanhill.fitnesschallenge.standings.StandingsFragment
+import me.ealanhill.fitnesschallenge.team.TeamFragment
+import me.ealanhill.fitnesschallenge.team.actions.SuperlativeActionCreator
+import me.ealanhill.fitnesschallenge.team.actions.TeamActionCreator
 
 class MainActivity : AppCompatActivity() {
 

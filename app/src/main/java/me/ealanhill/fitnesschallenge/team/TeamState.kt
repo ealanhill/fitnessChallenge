@@ -1,6 +1,6 @@
-package me.ealanhill.wtfitnesschallenge.team
+package me.ealanhill.fitnesschallenge.team
 
-import me.ealanhill.wtfitnesschallenge.team.actions.SuperlativeModel
+import me.ealanhill.fitnesschallenge.team.actions.SuperlativeModel
 import java.util.*
 
 data class TeamState(val teamName: String = "",

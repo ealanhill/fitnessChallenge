@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.database
+package me.ealanhill.fitnesschallenge.database
 
 object DatabaseTables {
     val ENTRIES = "entries"

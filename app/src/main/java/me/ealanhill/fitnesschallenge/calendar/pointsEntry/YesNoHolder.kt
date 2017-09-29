@@ -1,10 +1,10 @@
-package me.ealanhill.wtfitnesschallenge.calendar.pointsEntry
+package me.ealanhill.fitnesschallenge.calendar.pointsEntry
 
 import android.databinding.DataBindingUtil
 import android.widget.LinearLayout
-import me.ealanhill.wtfitnesschallenge.FitnessChallengeApplication
-import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.databinding.ItemYesNoBinding
+import me.ealanhill.fitnesschallenge.FitnessChallengeApplication
+import me.ealanhill.fitnesschallenge.R
+import me.ealanhill.fitnesschallenge.databinding.ItemYesNoBinding
 
 class YesNoHolder(itemView: LinearLayout): PointsViewHolder(itemView) {
 

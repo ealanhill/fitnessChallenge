@@ -1,10 +1,10 @@
-package me.ealanhill.wtfitnesschallenge.team
+package me.ealanhill.fitnesschallenge.team
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import me.ealanhill.wtfitnesschallenge.R
+import me.ealanhill.fitnesschallenge.R
 
 class TeamAdapter: RecyclerView.Adapter<TeamMemberViewHolder>() {
     var members: List<TeamMemberModel> = emptyList()

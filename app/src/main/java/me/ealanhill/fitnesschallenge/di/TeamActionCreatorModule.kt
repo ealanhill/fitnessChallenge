@@ -1,8 +1,8 @@
-package me.ealanhill.wtfitnesschallenge.di
+package me.ealanhill.fitnesschallenge.di
 
 import dagger.Module
 import dagger.Provides
-import me.ealanhill.wtfitnesschallenge.team.actions.TeamActionCreator
+import me.ealanhill.fitnesschallenge.team.actions.TeamActionCreator
 import javax.inject.Singleton
 
 @Module

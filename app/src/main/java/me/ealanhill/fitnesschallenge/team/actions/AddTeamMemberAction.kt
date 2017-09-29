@@ -1,6 +1,6 @@
-package me.ealanhill.wtfitnesschallenge.team.actions
+package me.ealanhill.fitnesschallenge.team.actions
 
-import me.ealanhill.wtfitnesschallenge.Action
-import me.ealanhill.wtfitnesschallenge.team.TeamMemberModel
+import me.ealanhill.fitnesschallenge.Action
+import me.ealanhill.fitnesschallenge.team.TeamMemberModel
 
 data class AddTeamMemberAction(val teamMember: TeamMemberModel = TeamMemberModel("", "", 0)): Action

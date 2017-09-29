@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.calendar.pointsEntry
+package me.ealanhill.fitnesschallenge.calendar.pointsEntry
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

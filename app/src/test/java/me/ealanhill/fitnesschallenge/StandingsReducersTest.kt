@@ -1,9 +1,9 @@
-package me.ealanhill.wtfitnesschallenge
+package me.ealanhill.fitnesschallenge
 
 import junit.framework.Assert.assertTrue
-import me.ealanhill.wtfitnesschallenge.standings.StandingsAction
-import me.ealanhill.wtfitnesschallenge.standings.StandingsReducers
-import me.ealanhill.wtfitnesschallenge.standings.StandingsState
+import me.ealanhill.fitnesschallenge.standings.StandingsAction
+import me.ealanhill.fitnesschallenge.standings.StandingsReducers
+import me.ealanhill.fitnesschallenge.standings.StandingsState
 import org.junit.Test
 
 class StandingsReducersTest {

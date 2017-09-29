@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1046713587094-3dqa72j5vnbn06rqddnakm64s32tf1m9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.ealanhill.fitnesschallenge",
+            "certificate_hash": "e11a41d7b00ee96360b9007d38ad4fc874b47c43"
+          }
+        },
+        {
           "client_id": "1046713587094-g9t8g8k90ltsdns4rn516pf48i55higm.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046713587094-g9t8g8k90ltsdns4rn516pf48i55higm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

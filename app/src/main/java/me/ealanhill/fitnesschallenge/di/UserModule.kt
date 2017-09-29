@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.di
+package me.ealanhill.fitnesschallenge.di
 
 import com.google.firebase.auth.FirebaseUser
 import dagger.Module

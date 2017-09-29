@@ -1,7 +1,7 @@
-package me.ealanhill.wtfitnesschallenge.team
+package me.ealanhill.fitnesschallenge.team
 
-import me.ealanhill.wtfitnesschallenge.Action
-import me.ealanhill.wtfitnesschallenge.team.actions.*
+import me.ealanhill.fitnesschallenge.Action
+import me.ealanhill.fitnesschallenge.team.actions.*
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
 

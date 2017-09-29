@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.calendar
+package me.ealanhill.fitnesschallenge.calendar
 
 class DateItem(val year: Int,
                val month: String,

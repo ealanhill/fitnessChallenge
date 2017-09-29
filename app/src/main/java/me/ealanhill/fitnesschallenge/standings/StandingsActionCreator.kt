@@ -1,12 +1,12 @@
-package me.ealanhill.wtfitnesschallenge.standings
+package me.ealanhill.fitnesschallenge.standings
 
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import me.ealanhill.wtfitnesschallenge.Action
-import me.ealanhill.wtfitnesschallenge.database.DatabaseTables
+import me.ealanhill.fitnesschallenge.Action
+import me.ealanhill.fitnesschallenge.database.DatabaseTables
 import me.tatarka.redux.Thunk
 
 class StandingsActionCreator {

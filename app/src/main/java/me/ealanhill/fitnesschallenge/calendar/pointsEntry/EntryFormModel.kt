@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.calendar.pointsEntry
+package me.ealanhill.fitnesschallenge.calendar.pointsEntry
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -1,10 +1,10 @@
-package me.ealanhill.wtfitnesschallenge
+package me.ealanhill.fitnesschallenge
 
 import junit.framework.Assert.assertTrue
-import me.ealanhill.wtfitnesschallenge.team.TeamMemberModel
-import me.ealanhill.wtfitnesschallenge.team.TeamReducers
-import me.ealanhill.wtfitnesschallenge.team.TeamState
-import me.ealanhill.wtfitnesschallenge.team.actions.*
+import me.ealanhill.fitnesschallenge.team.TeamMemberModel
+import me.ealanhill.fitnesschallenge.team.TeamReducers
+import me.ealanhill.fitnesschallenge.team.TeamState
+import me.ealanhill.fitnesschallenge.team.actions.*
 import org.junit.Test
 
 class TeamReducersTest {

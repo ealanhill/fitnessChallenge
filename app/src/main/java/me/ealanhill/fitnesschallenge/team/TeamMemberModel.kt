@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.team
+package me.ealanhill.fitnesschallenge.team
 
 data class TeamMemberModel (
         val uid: String,

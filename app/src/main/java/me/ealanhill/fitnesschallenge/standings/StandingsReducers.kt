@@ -1,6 +1,6 @@
-package me.ealanhill.wtfitnesschallenge.standings
+package me.ealanhill.fitnesschallenge.standings
 
-import me.ealanhill.wtfitnesschallenge.Action
+import me.ealanhill.fitnesschallenge.Action
 import me.tatarka.redux.Reducer
 import me.tatarka.redux.Reducers
 

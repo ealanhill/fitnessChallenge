@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge
+package me.ealanhill.fitnesschallenge
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView

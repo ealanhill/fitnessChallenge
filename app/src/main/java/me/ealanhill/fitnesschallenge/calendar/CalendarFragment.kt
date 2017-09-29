@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.calendar
+package me.ealanhill.fitnesschallenge.calendar
 
 import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.Observer
@@ -10,12 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseUser
-import me.ealanhill.wtfitnesschallenge.*
-import me.ealanhill.wtfitnesschallenge.calendar.action.InitializeCalendarAction
-import me.ealanhill.wtfitnesschallenge.calendar.action.CalendarActionCreator
-import me.ealanhill.wtfitnesschallenge.calendar.action.UserAction
-import me.ealanhill.wtfitnesschallenge.databinding.FragmentCalendarBinding
-import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.PointsDialogFragment
+import me.ealanhill.fitnesschallenge.*
+import me.ealanhill.fitnesschallenge.calendar.action.InitializeCalendarAction
+import me.ealanhill.fitnesschallenge.calendar.action.CalendarActionCreator
+import me.ealanhill.fitnesschallenge.calendar.action.UserAction
+import me.ealanhill.fitnesschallenge.databinding.FragmentCalendarBinding
+import me.ealanhill.fitnesschallenge.calendar.pointsEntry.PointsDialogFragment
 import javax.inject.Inject
 
 class CalendarFragment: LifecycleFragment(), CalendarAdapter.CalendarOnClickListener {

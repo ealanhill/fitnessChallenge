@@ -1,10 +1,10 @@
-package me.ealanhill.wtfitnesschallenge.calendar
+package me.ealanhill.fitnesschallenge.calendar
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
-import me.ealanhill.wtfitnesschallenge.R
-import me.ealanhill.wtfitnesschallenge.databinding.ItemTextAndNumberBinding
+import me.ealanhill.fitnesschallenge.R
+import me.ealanhill.fitnesschallenge.databinding.ItemTextAndNumberBinding
 
 class CalendarItemViewHolder(itemView: LinearLayout) : RecyclerView.ViewHolder(itemView) {
     var binding: ItemTextAndNumberBinding = DataBindingUtil.bind<ItemTextAndNumberBinding>(itemView)

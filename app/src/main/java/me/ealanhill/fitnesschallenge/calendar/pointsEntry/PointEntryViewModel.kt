@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.calendar.pointsEntry
+package me.ealanhill.fitnesschallenge.calendar.pointsEntry
 
 import android.app.Application
 import me.tatarka.redux.android.lifecycle.StoreAndroidViewModel

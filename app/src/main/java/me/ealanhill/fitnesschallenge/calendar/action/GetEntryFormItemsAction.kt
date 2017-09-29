@@ -1,7 +1,7 @@
-package me.ealanhill.wtfitnesschallenge.calendar.action
+package me.ealanhill.fitnesschallenge.calendar.action
 
-import me.ealanhill.wtfitnesschallenge.Action
-import me.ealanhill.wtfitnesschallenge.calendar.pointsEntry.EntryFormModel
+import me.ealanhill.fitnesschallenge.Action
+import me.ealanhill.fitnesschallenge.calendar.pointsEntry.EntryFormModel
 import java.util.*
 
 object GetEntryFormItemsAction: Action {

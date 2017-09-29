@@ -1,4 +1,4 @@
-package me.ealanhill.wtfitnesschallenge.calendar.pointsEntry
+package me.ealanhill.fitnesschallenge.calendar.pointsEntry
 
 import android.databinding.DataBindingUtil
 import android.text.Editable
@@ -7,7 +7,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.widget.LinearLayout
-import me.ealanhill.wtfitnesschallenge.databinding.ItemPointEntryBinding
+import me.ealanhill.fitnesschallenge.databinding.ItemPointEntryBinding
 
 class PointEntryHolder(itemView: LinearLayout): PointsViewHolder(itemView) {
     val binding: ItemPointEntryBinding = DataBindingUtil.bind<ItemPointEntryBinding>(itemView)

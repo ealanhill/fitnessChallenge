@@ -1,5 +1,5 @@
-package me.ealanhill.wtfitnesschallenge.calendar.action
+package me.ealanhill.fitnesschallenge.calendar.action
 
-import me.ealanhill.wtfitnesschallenge.Action
+import me.ealanhill.fitnesschallenge.Action
 
 object InitializeCalendarAction: Action

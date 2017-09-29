@@ -6,7 +6,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "me.ealanhill.wtfitnesschallenge"
+        applicationId "me.ealanhill.fitnesschallenge"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
